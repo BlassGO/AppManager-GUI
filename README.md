@@ -12,7 +12,7 @@
 |---------|-------------|
 | **App Listing** | Displays all apps for the current user with ``Label`` (according to the device's language), ``Package``, ``ID``, ``APK path``, and ``Type`` (system/user) |
 | **Icon View** | Shows apps with icons and labels, mimicking an app drawer. Allows icon extraction for specific apps |
-| **Search Filters** | Filter apps by name, package, or state (ENABLED/DISABLED/UNINSTALLED) |
+| **Search Filters** | Filter apps by name, package, membership or state (ENABLED/DISABLED/UNINSTALLED) |
 | **App Actions** | Perform **activate**, **deactivate**, **uninstall**, or **install** on multiple apps intuitively |
 | **Device Management** | Switch between multiple devices (USB or wireless, previously connected) |
 | **Log Viewer** | Integrated GUI log viewer for errors and exceptions |
