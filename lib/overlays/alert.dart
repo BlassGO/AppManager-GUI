@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:app_manager/utils/url.dart';
 
 class Alert {
   static void showWarning(BuildContext context, String message, {String? command}) {
@@ -54,6 +55,22 @@ class _WarningDialog extends StatelessWidget {
 
   const _WarningDialog({required this.message, this.command});
 
+  Future<void> _openInBrowser(BuildContext context) async {
+    if (command == null || command!.isEmpty) return;
+
+    final success = await UrlUtils.trylaunchUrl(command!);
+    if (!success) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to open URL in browser.')),
+      );
+    }
+  }
+
+  bool _isHttpsUrl() {
+    if (command == null || command!.isEmpty) return false;
+    return command!.startsWith('https://') || command!.startsWith('http://');
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -102,17 +119,11 @@ class _WarningDialog extends StatelessWidget {
                           );
                         },
                       ),
-                      if (Platform.isLinux)
+                      if (_isHttpsUrl())
                         IconButton(
-                          tooltip: 'Run',
-                          icon: Icon(Icons.play_arrow, color: Colors.greenAccent),
-                          onPressed: () async {
-                            await Process.start(
-                              'gnome-terminal',
-                              ['--', 'bash', '-c', command!],
-                              mode: ProcessStartMode.detached,
-                            );
-                          },
+                          tooltip: 'Open in Browser',
+                          icon: Icon(Icons.language, color: Colors.blueAccent),
+                          onPressed: () => _openInBrowser(context),
                         ),
                     ],
                   ),

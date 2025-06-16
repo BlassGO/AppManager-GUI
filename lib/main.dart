@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:async';
 import 'package:app_manager/services/manager.dart';
 import 'package:app_manager/utils/file_manager.dart';
 import 'package:app_manager/utils/config.dart';
@@ -107,16 +108,26 @@ class AnimatedDonateButton extends StatefulWidget {
 class _AnimatedDonateButtonState extends State<AnimatedDonateButton> with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _shine;
+  Timer? _timer;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: const Duration(seconds: 4))..repeat();
+    _controller = AnimationController(vsync: this, duration: const Duration(seconds: 4))..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          _controller.reset();
+          _timer = Timer(const Duration(seconds: 10), () {
+            if (mounted) _controller.forward();
+          });
+        }
+      });
     _shine = Tween<double>(begin: -2, end: 2).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+    _controller.forward();
   }
 
   @override
   void dispose() {
+    _timer?.cancel();
     _controller.dispose();
     super.dispose();
   }
@@ -133,14 +144,14 @@ class _AnimatedDonateButtonState extends State<AnimatedDonateButton> with Single
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF8B6F47),
+                  border: Border.all(color: const Color.fromRGBO(107, 107, 107, 0.7), width: 2),
                   borderRadius: BorderRadius.circular(12),
                   gradient: LinearGradient(
                     begin: Alignment(_shine.value - 1, 0),
                     end: Alignment(_shine.value + 1, 0),
                     colors: [
                       Colors.transparent,
-                      Colors.white.withOpacity(0.3),
+                      const Color.fromRGBO(255, 255, 255, 0.25),
                       Colors.transparent,
                     ],
                     stops: const [0.0, 0.5, 1.0],
@@ -149,15 +160,16 @@ class _AnimatedDonateButtonState extends State<AnimatedDonateButton> with Single
                 child: const Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.attach_money, color: Colors.white, size: 14),
+                    Icon(Icons.attach_money, color: Color(0xFFE0E0E0), size: 14),
                     SizedBox(width: 4),
                     Text(
-                      'Donate',
+                      'Support',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Color(0xFFE0E0E0),
                         fontSize: 12,
-                        fontStyle: FontStyle.italic,
-                        decoration: TextDecoration.underline,
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w500,
+                        decoration: TextDecoration.none,
                       ),
                     ),
                   ],
@@ -260,17 +272,22 @@ class _AppManagerPageState extends State<AppManagerPage> {
                 child: MouseRegion(
                   cursor: SystemMouseCursors.click,
                   child: GestureDetector(
-                    onTap: () => UrlUtils.launchUrlOrShow(context, 'https://github.com/BlassGO'),
+                    onTap: () => UrlUtils.launchUrlOrShow(context, 'https://github.com/BlassGO/AppManager-GUI'),
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                      decoration: BoxDecoration(color: Colors.blueAccent, borderRadius: BorderRadius.circular(12)),
+                      decoration: BoxDecoration(
+                        color: Color.fromRGBO(33, 149, 243, 0.684),
+                        border: Border.all(color: Color.fromARGB(255, 52, 87, 138), width: 2),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                       child: const Text(
                         'By @BlassGO',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Color(0xFFE0E0E0),
                           fontSize: 12,
-                          fontStyle: FontStyle.italic,
-                          decoration: TextDecoration.underline,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w500,
+                          decoration: TextDecoration.none,
                         ),
                       ),
                     ),

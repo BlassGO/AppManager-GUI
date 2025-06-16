@@ -97,6 +97,7 @@ class _ConfigOverlayState extends State<ConfigOverlay> {
                 controlAffinity: ListTileControlAffinity.leading,
                 checkboxShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                 visualDensity: VisualDensity(horizontal: -2, vertical: -2),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)), 
               ),
             ),
             SizedBox(height: 8),
@@ -121,6 +122,7 @@ class _ConfigOverlayState extends State<ConfigOverlay> {
                 controlAffinity: ListTileControlAffinity.leading,
                 checkboxShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                 visualDensity: VisualDensity(horizontal: -2, vertical: -2),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
               ),
             ),
             SizedBox(height: 12),
@@ -130,7 +132,7 @@ class _ConfigOverlayState extends State<ConfigOverlay> {
               controller: _ipController,
               decoration: InputDecoration(
                 labelText: 'Device IP',
-                border: OutlineInputBorder(),
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                 hintText: 'e.g. 192.168.1.100',
               ),
               keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -140,7 +142,7 @@ class _ConfigOverlayState extends State<ConfigOverlay> {
               controller: _portController,
               decoration: InputDecoration(
                 labelText: 'Port',
-                border: OutlineInputBorder(),
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                 hintText: 'e.g. 5555',
               ),
               keyboardType: TextInputType.number,
@@ -156,9 +158,7 @@ class _ConfigOverlayState extends State<ConfigOverlay> {
                 ),
                 SizedBox(width: 16),
                 ElevatedButton.icon(
-                  icon: _disconnecting
-                      ? SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.red))
-                      : Icon(Icons.link_off, color: Colors.red),
+                  icon: _disconnecting ? SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.red)) : Icon(Icons.link_off, color: Colors.red),
                   label: Text('Disconnect', style: TextStyle(color: Colors.red)),
                   onPressed: _disconnecting ? null : _disconnect,
                   style: ElevatedButton.styleFrom(
