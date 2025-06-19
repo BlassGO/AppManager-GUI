@@ -64,6 +64,7 @@
 |---------|----------|-------------|
 | **Never Uninstall** | Settings > Options | Deactivate instead of uninstalling apps. |
 | **Export All Apps** | Settings > Options | Include all apps in JSON export, deducing actions to replicate state. |
+| **Refresh all icons** | Settings > Options | Icons are cached per device. This option forces a full refresh, ensuring all app icons are always the latest, but it impacts performance. |
 | **TCP/IP** | Settings > TCP/IP | Configure wireless device connections (IP/port). |
 
 ## Usage Tips
