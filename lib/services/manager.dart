@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:archive/archive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:app_manager/services/adb.dart';
@@ -65,12 +66,9 @@ class ManagerService {
   }
 
   static void parseAppManagerOutput(String output) {
-    userId = null;
-    apps.clear();
-
     final lines = output.split(RegExp(r'[\r\n]+'));
     for (final line in lines) {
-      if (line.trim().isEmpty) continue;
+      //if (line.trim().isEmpty) continue;
       if (line.startsWith('USER:')) {
         userId = line.substring(5).trim();
         continue;
@@ -148,14 +146,16 @@ class ManagerService {
     return actions;
   }
 
-  static Future<bool> loadAppIcons(context, String iconsDirPath, String defaultIconPath) async {
+  static Future<bool> loadAppIcons(BuildContext context, String iconsDirPath, String defaultIconPath) async {
     if (!await AdbService.ensureDevice(context)) {
       return false;
     }
-    
+
+    iconsLoaded = false;
+    final rmFlag = ConfigUtils.refreshIcons ? '-rm' : '';
     LoadingOverlay.show(context, 'Extracting icons...');
     await AdbService.runShell(
-      'export CLASSPATH=/data/local/tmp/app_manager; app_process / Main -icon /data/local/tmp/icons',
+      'export CLASSPATH=/data/local/tmp/app_manager; app_process / Main $rmFlag -icon /data/local/tmp/icons -zip /data/local/tmp/icons.zip',
       toLowerCase: false,
       toLogIfError: true
     );
@@ -166,24 +166,34 @@ class ManagerService {
       return false;
     }
 
-    final iconsDir = Directory(iconsDirPath);
-
-    if (await iconsDir.exists()) {
-      await iconsDir.delete(recursive: true);
-    }
-    await iconsDir.create(recursive: true);
-
     LoadingOverlay.show(context, 'Pulling icons...');
-    await AdbService.pullFile(
-      '/data/local/tmp/icons/.',
-      iconsDirPath
-    );
+    final tempDir = Directory.systemTemp;
+    final zipFile = File('${tempDir.path}/icons.zip'.replaceAll('\\', '/'));
+    await AdbService.pullFile('/data/local/tmp/icons.zip', zipFile.path);
     LoadingOverlay.hide();
 
     if (AdbService.hasError()) {
-      Alert.showWarning(context, 'Failed to pull icons.\n\nSee log for details.');
+      Alert.showWarning(context, 'Failed to pull icons.zip.\n\nSee log for details.');
       return false;
     }
+
+    final input = zipFile.readAsBytesSync();
+    final archive = ZipDecoder().decodeBytes(input);
+    for (final file in archive) {
+      final filePath = '$iconsDirPath${file.name}';
+      if (file.isFile) {
+        File(filePath)
+          ..createSync(recursive: false)
+          ..writeAsBytesSync(file.content as List<int>);
+      }
+    }
+    zipFile.deleteSync();
+
+    if (AdbService.hasError()) {
+      Alert.showWarning(context, 'Failed to extract icons from zip.\n\nSee log for details.');
+      return false;
+    }
+
     iconsLoaded = true;
     await assignIconPaths(iconsDirPath, defaultIconPath);
     return true;
@@ -200,7 +210,7 @@ class ManagerService {
     }
   }
 
-  static Future<bool> loadAppsFromDevice(BuildContext context) async {
+  static Future<bool> loadAppsFromDevice(BuildContext context, {VoidCallback? refreshUI}) async {
     if (!await AdbService.ensureDevice(context)) {
       return false;
     }
@@ -210,21 +220,42 @@ class ManagerService {
       return false;
     }
 
-    LoadingOverlay.show(context, 'Loading apps...');
-    final output = await AdbService.runShell(
-      'export CLASSPATH=/data/local/tmp/app_manager; app_process / Main',
-      toLowerCase: false,
-      toLogIfError: true
+    iconsLoaded = false;
+    userId = null;
+    apps.clear();
+
+    StringBuffer buffer = StringBuffer();
+    const batchSize = 10;
+    int lineCount = 0;
+    bool firstBatchProcessed = false;
+
+    await AdbService.runAdbStream(
+      ['shell', 'export CLASSPATH=/data/local/tmp/app_manager; app_process / Main'],
+      toLog: false,
+      toLogIfError: true,
+      onLineReceived: (line) {
+        buffer.write(line);
+        buffer.write('\n');
+        lineCount++;
+        if (!firstBatchProcessed && lineCount >= batchSize) {
+          parseAppManagerOutput(buffer.toString());
+          buffer.clear();
+          firstBatchProcessed = true;
+          refreshUI?.call();
+        }
+      }
     );
-    LoadingOverlay.hide();
-    if (AdbService.hasError() || output.isEmpty) {
-      Alert.showWarning(context, 'Failed to load app list.');
+
+    if (AdbService.hasError()) {
+      Alert.showWarning(context, 'Failed to load app list.\n\nSee log for details.');
       return false;
     }
 
-    parseAppManagerOutput(output);
-    updateActionCounters();
+    if (buffer.isNotEmpty) {
+      parseAppManagerOutput(buffer.toString());
+    }
 
+    updateActionCounters();
     return true;
   }
 
@@ -239,7 +270,7 @@ class ManagerService {
       else if (state > 0 && !checked) {
         if (isUninstallable) uninstall++;
         else deactivate++;
-      }else if (state == 0 && checked) activate++;
+      } else if (state == 0 && checked) activate++;
       else if (state < 0 && checked) install++;
     });
     activateCount = activate;

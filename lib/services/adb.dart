@@ -9,7 +9,7 @@ import 'package:app_manager/overlays/alert.dart';
 import 'package:app_manager/utils/config.dart';
 
 class AdbService {
-  static String? lastLog = '';
+  static final StringBuffer _logBuffer = StringBuffer();
   static String? lastWirelessIp;
   static String? lastWirelessPort;
   static int? lastExitCode;
@@ -17,18 +17,20 @@ class AdbService {
   static bool _adbInitialized = false;
   static bool _isAdbAvailable = false;
 
+  static String? get lastLog => _logBuffer.toString();
+
   static void appendLog(String? value) {
     if (value == null || value.isEmpty) return;
-    if (lastLog == null || lastLog!.isEmpty) {
-      lastLog = value;
-    } else {
-      lastLog = '$lastLog\n$value';
-    }
+    _logBuffer.writeln(value);
+  }
+
+  static void clearLog() {
+    _logBuffer.clear();
   }
 
   static void reset() {
     currentDevice = null;
-    lastLog = '';
+    clearLog();
     lastExitCode = null;
     ManagerService.reset();
   }
@@ -50,14 +52,49 @@ class AdbService {
       );
       final output = ((result.stdout ?? '').toString() + (result.stderr ?? '').toString());
       final lower = output.toLowerCase();
-      lastExitCode = result.exitCode;
-      if (lastExitCode == 0) lastExitCode = RegExp(r'\b(error|failure)\b').hasMatch(lower) ? 1 : 0;
+      setErrorCode(result.exitCode, lower);
       if ((toLogIfError && hasError()) || (!toLogIfError && toLog)) appendLog(output);
       return toLowerCase ? lower : output;
     } catch (e) {
       appendLog('ADB Exception: $e');
-      lastExitCode = 1;
+      setErrorCode(1, '');
       return '';
+    }
+  }
+
+  static Future<void> runAdbStream(
+    List<String> args, {
+    required Function(String) onLineReceived,
+    bool toLog = true,
+    bool toLogIfError = false
+  }) async {
+    try {
+      final process = await Process.start('adb', _withSerial(args));
+      bool hasError = false;
+
+      await for (var line in process.stdout.transform(utf8.decoder).transform(const LineSplitter())) {
+        if (line.trim().isEmpty) continue;
+        if (toLog) appendLog(line);
+        onLineReceived(line);
+      }
+
+      await for (var line in process.stderr.transform(utf8.decoder).transform(const LineSplitter())) {
+        if (toLogIfError) appendLog(line);
+        hasError = true;
+      }
+
+      final exitCode = await process.exitCode;
+      setErrorCode(exitCode, hasError ? 'error' : '');
+    } catch (e) {
+      appendLog('ADB Exception: $e');
+      setErrorCode(1, '');
+    }
+  }
+
+  static void setErrorCode(int exitCode, String output) {
+    lastExitCode = exitCode;
+    if (lastExitCode == 0) {
+      lastExitCode = RegExp(r'\b(error|failure)\b').hasMatch(output) ? 1 : 0;
     }
   }
 
@@ -199,10 +236,10 @@ class AdbService {
 
   static Future<bool> selectDevice(BuildContext context, {showSelector = false, Future<void> Function()? loadAppsCallback}) async {
     if (!await isAdbAvailable()) {
-      Alert.showWarning(context,'ADB is not installed.\n\nSuggested action:', command: getInstallCommand());
+      Alert.showWarning(context, 'ADB is not installed.\n\nSuggested action:', command: getInstallCommand());
       return false;
     }
-    
+
     bool isNewDevice = false;
     DeviceInfo? selectedDevice;
     final devices = await findDevices();
@@ -237,16 +274,16 @@ class AdbService {
         Alert.showWarning(context,'ADB is not installed.\n\nSuggested action:', command: getInstallCommand());
         return false;
       }
-      LoadingOverlay.show(context, 'Finding devices...');
+      //LoadingOverlay.show(context, 'Finding devices...');
       if (ConfigUtils.useWireless && ConfigUtils.lastWirelessIp != null && ConfigUtils.lastWirelessPort != null) {
         await connectTcp(ConfigUtils.lastWirelessIp!, ConfigUtils.lastWirelessPort!);
       }
       if (!await selectDevice(context)) {
-        LoadingOverlay.hide();
+        //LoadingOverlay.hide();
         Alert.showWarning(context, 'No devices found. Please connect a device.');
         return false;
       }
-      LoadingOverlay.hide();
+      //LoadingOverlay.hide();
     }
     final output = await runAdb(['get-state'], toLog: false);
     if (output.contains('offline')) {

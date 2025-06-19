@@ -29,7 +29,7 @@ void main() async {
       ..minSize = initialSize
       ..size = initialSize
       ..alignment = Alignment.center
-      ..title = 'App Manager [1.0.0]'
+      ..title = 'App Manager [1.1.0]'
       ..show();
   });
 }
@@ -140,7 +140,7 @@ class _AnimatedDonateButtonState extends State<AnimatedDonateButton> with Single
           child: MouseRegion(
             cursor: SystemMouseCursors.click,
             child: GestureDetector(
-              onTap: () => UrlUtils.launchUrlOrShow(context, 'https://www.paypal.com/paypalme/blassgohuh'),
+              onTap: () => UrlUtils.launchUrlOrShow(context, 'https://paypal.me/blassgohuh?country.x=EC&locale.x=es_XC'),
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
@@ -181,6 +181,37 @@ class _AnimatedDonateButtonState extends State<AnimatedDonateButton> with Single
       );
 }
 
+class LoadingIndicator extends StatelessWidget {
+  final bool isLoadingApps;
+  final bool loadIcons;
+  final bool iconsReady;
+
+  const LoadingIndicator({
+    super.key,
+    required this.isLoadingApps,
+    required this.loadIcons,
+    required this.iconsReady,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (isLoadingApps || (loadIcons && !iconsReady)) {
+      return const Padding(
+        padding: EdgeInsets.all(8.0),
+        child: SizedBox(
+          width: 20,
+          height: 20,
+          child: CircularProgressIndicator(
+            strokeWidth: 2,
+            color: Colors.white,
+          ),
+        ),
+      );
+    }
+    return const SizedBox.shrink();
+  }
+}
+
 class AppManagerPage extends StatefulWidget {
   const AppManagerPage({super.key});
 
@@ -195,6 +226,9 @@ class _AppManagerPageState extends State<AppManagerPage> {
   double _panelHeight = 220;
   bool _isPanelVisible = true;
   bool _loadIcons = false;
+  final ValueNotifier<bool> _isLoadingNotifier = ValueNotifier(false);
+  final ValueNotifier<bool> _iconsReadyNotifier = ValueNotifier(false);
+  Timer? _debounceTimer;
 
   final List<Map<String, String>> stateItems = [
     {'value': 'all', 'text': 'All apps'},
@@ -234,6 +268,14 @@ class _AppManagerPageState extends State<AppManagerPage> {
   }
 
   @override
+  void dispose() {
+    _debounceTimer?.cancel();
+    _isLoadingNotifier.dispose();
+    _iconsReadyNotifier.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: const Text('App Manager'),
@@ -244,7 +286,10 @@ class _AppManagerPageState extends State<AppManagerPage> {
               icon: const Icon(Icons.usb),
               onPressed: () async {
                 if (await AdbService.selectDevice(context, showSelector: true, loadAppsCallback: _loadAppsFromDevice)) {
-                  _loadIcons = false;
+                  setState(() {
+                    _loadIcons = false;
+                    _iconsReadyNotifier.value = false;
+                  });
                 }
               },
             ),
@@ -337,7 +382,21 @@ class _AppManagerPageState extends State<AppManagerPage> {
                   Positioned.fill(
                     top: 0,
                     bottom: _panelHeight + 20,
-                    child: _loadIcons && ManagerService.iconsLoaded ? _buildIconGrid() : _buildAppList(),
+                    child: Column(
+                      children: [
+                        ValueListenableBuilder<bool>(
+                          valueListenable: _isLoadingNotifier,
+                          builder: (context, isLoading, child) => LoadingIndicator(
+                            isLoadingApps: isLoading,
+                            loadIcons: _loadIcons,
+                            iconsReady: _iconsReadyNotifier.value,
+                          ),
+                        ),
+                        Expanded(
+                          child: (_loadIcons && _iconsReadyNotifier.value) ? _buildIconGrid() : _buildAppList(),
+                        ),
+                      ],
+                    ),
                   ),
                   Positioned(
                     bottom: _panelHeight,
@@ -417,6 +476,7 @@ class _AppManagerPageState extends State<AppManagerPage> {
                                                               title: const Text('App Icons', style: TextStyle(fontSize: 13)),
                                                               value: _loadIcons,
                                                               onChanged: (newValue) async {
+                                                                _iconsReadyNotifier.value = ManagerService.iconsLoaded;
                                                                 if (newValue && !ManagerService.iconsLoaded && !await _loadAppIcons()) return;
                                                                 setState(() => _loadIcons = newValue);
                                                               },
@@ -655,12 +715,20 @@ class _AppManagerPageState extends State<AppManagerPage> {
       );
 
   Future<void> _loadAppsFromDevice() async {
-    await ManagerService.loadAppsFromDevice(context);
+    _isLoadingNotifier.value = true;
+    _iconsReadyNotifier.value = false;
+    await ManagerService.loadAppsFromDevice(context, refreshUI: () => setState(() {}));
     if (_loadIcons) await _loadAppIcons();
+    _isLoadingNotifier.value = false;
     setState(() {});
   }
 
-  Future<bool> _loadAppIcons() async => await ManagerService.loadAppIcons(context, iconsDirPath, defaultIconPath);
+  Future<bool> _loadAppIcons() async {
+    final success = await ManagerService.loadAppIcons(context, iconsDirPath, defaultIconPath);
+    _iconsReadyNotifier.value = success;
+    _isLoadingNotifier.value = false;
+    return success;
+  }
 
   Future<void> _importAppActions() async {
     await FileManager.importAppActions(context);

@@ -8,6 +8,7 @@ class ConfigUtils {
   static bool useWireless = false;
   static bool neverUninstallApps = false;
   static bool exportAllApps = false;
+  static bool refreshIcons = false;
 
   static Future<File> _getConfigFile() async {
     final dir = await getApplicationSupportDirectory();
@@ -21,6 +22,7 @@ class ConfigUtils {
       'lastWirelessPort': lastWirelessPort,
       'neverUninstallApps': neverUninstallApps,
       'exportAllApps': exportAllApps,
+      'refreshIcons': refreshIcons,
     };
     await file.writeAsString(jsonEncode(config));
   }
@@ -34,6 +36,7 @@ class ConfigUtils {
         lastWirelessPort = config['lastWirelessPort'];
         neverUninstallApps = config['neverUninstallApps'] ?? false;
         exportAllApps = config['exportAllApps'] ?? false;
+        refreshIcons = config['refreshIcons'] ?? false;
       }
     } catch (_) {}
   }
