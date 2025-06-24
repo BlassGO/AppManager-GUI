@@ -9,6 +9,7 @@ class ConfigUtils {
   static bool neverUninstallApps = false;
   static bool exportAllApps = false;
   static bool refreshIcons = false;
+  static String? adbPath;
 
   static Future<File> _getConfigFile() async {
     final dir = await getApplicationSupportDirectory();
@@ -23,6 +24,7 @@ class ConfigUtils {
       'neverUninstallApps': neverUninstallApps,
       'exportAllApps': exportAllApps,
       'refreshIcons': refreshIcons,
+      'adbPath': adbPath,
     };
     await file.writeAsString(jsonEncode(config));
   }
@@ -37,6 +39,7 @@ class ConfigUtils {
         neverUninstallApps = config['neverUninstallApps'] ?? false;
         exportAllApps = config['exportAllApps'] ?? false;
         refreshIcons = config['refreshIcons'] ?? false;
+        adbPath = config['adbPath'];
       }
     } catch (_) {}
   }

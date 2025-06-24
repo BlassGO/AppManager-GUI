@@ -6,6 +6,32 @@ import 'package:app_manager/services/manager.dart';
 import 'package:app_manager/utils/config.dart';
 
 class FileManager {
+  static Future<String?> selectDirectory({String? dialogTitle}) async {
+    return await FilePicker.platform.getDirectoryPath(
+      dialogTitle: dialogTitle ?? 'Select directory',
+    );
+  }
+
+  static Future<void> selectAdbFolder(BuildContext context) async {
+    final result = await selectDirectory(dialogTitle: 'Select ADB folder');
+    if (result != null) {
+      final adbPath = Platform.isWindows ? '$result\\adb.exe' : '$result/adb';
+      final file = File(adbPath);
+      if (await file.exists()) {
+        ConfigUtils.adbPath = adbPath;
+        await ConfigUtils.save();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('ADB path set to $adbPath')),
+        );
+        Navigator.of(context, rootNavigator: false).pop();
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('No valid ADB executable found in selected folder.')),
+        );
+      }
+    }
+  }
+
   static Future<void> exportAppActions(BuildContext context) async {
     final exportList = <Map<String, dynamic>>[];
     final isUninstallable = !ConfigUtils.neverUninstallApps;
@@ -47,8 +73,8 @@ class FileManager {
     final jsonStr = const JsonEncoder.withIndent('  ').convert(exportList);
     final now = DateTime.now();
     final fileName = 'AppList-${now.day.toString().padLeft(2, '0')}-'
-      '${now.month.toString().padLeft(2, '0')}-'
-      '${now.year}.json';
+        '${now.month.toString().padLeft(2, '0')}-'
+        '${now.year}.json';
 
     final savePath = await FilePicker.platform.saveFile(
       dialogTitle: 'Export actions as JSON',
@@ -59,12 +85,30 @@ class FileManager {
 
     if (savePath == null) return;
 
-    final file = File(savePath);
+    final normalizedSavePath = savePath.toLowerCase().endsWith('.json')
+        ? savePath
+        : '$savePath.json';
+
+    final file = File(normalizedSavePath);
     await file.writeAsString(jsonStr);
 
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Exported to $savePath')),
+      SnackBar(content: Text('Exported to $normalizedSavePath')),
     );
+  }
+
+  static Future<void> importJsonString(BuildContext context, String jsonStr) async {
+    List<dynamic> imported;
+    try {
+      imported = json.decode(jsonStr);
+      if (imported.isEmpty) throw Exception('Empty JSON.');
+    } catch (_) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Invalid JSON.')),
+      );
+      return;
+    }
+    await _applyImportedActions(context, imported);
   }
 
   static Future<void> importAppActions(BuildContext context) async {
@@ -77,17 +121,10 @@ class FileManager {
 
     final file = File(result.files.single.path!);
     final jsonStr = await file.readAsString();
-    List<dynamic> imported;
-    try {
-      imported = json.decode(jsonStr);
-      if (imported.isEmpty) throw Exception();
-    } catch (_) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Invalid JSON.')),
-      );
-      return;
-    }
+    await importJsonString(context, jsonStr);
+  }
 
+  static Future<void> _applyImportedActions(BuildContext context, List<dynamic> imported) async {
     int applied = 0;
     for (final item in imported) {
       if (item is! Map) continue;
@@ -101,7 +138,7 @@ class FileManager {
         app['isChecked'] = false;
         applied++;
       } else if (action == 'deactivate' && state < 0) {
-        app['doBefore'] = 'install-disable';
+        app['action'] = 'install-disable';
         applied++;
       } else if ((action == 'install' || action == 'activate') && state <= 0) {
         app['isChecked'] = true;
@@ -110,7 +147,7 @@ class FileManager {
     }
     ManagerService.updateActionCounters();
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Imported $applied actions.')),
+      SnackBar(content: Text('Applied $applied actions.')),
     );
   }
 
@@ -128,6 +165,10 @@ class FileManager {
 
     if (savePath == null) return;
 
+    final normalizedSavePath = savePath.toLowerCase().endsWith('.png')
+        ? savePath
+        : '$savePath.png';
+
     final srcFile = File(iconPath);
     if (!await srcFile.exists()) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -136,11 +177,10 @@ class FileManager {
       return;
     }
 
-    await srcFile.copy(savePath);
+    await srcFile.copy(normalizedSavePath);
 
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Icon exported to $savePath')),
+      SnackBar(content: Text('Icon exported to $normalizedSavePath')),
     );
   }
-
 }

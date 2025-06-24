@@ -7,6 +7,7 @@ import 'package:app_manager/utils/url.dart';
 import 'package:app_manager/services/adb.dart';
 import 'package:app_manager/overlays/alert.dart';
 import 'package:app_manager/overlays/config.dart';
+import 'package:app_manager/overlays/repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
@@ -24,12 +25,12 @@ void main() async {
   iconsDirPath = '$appSupportDir${Platform.pathSeparator}icons${Platform.pathSeparator}'.replaceAll('\\', '/');
   runApp(const MyApp());
   doWhenWindowReady(() {
-    const initialSize = Size(700, 550);
+    const initialSize = Size(800, 580);
     appWindow
       ..minSize = initialSize
       ..size = initialSize
       ..alignment = Alignment.center
-      ..title = 'App Manager [1.1.0]'
+      ..title = 'App Manager [1.2.0]'
       ..show();
   });
 }
@@ -140,7 +141,7 @@ class _AnimatedDonateButtonState extends State<AnimatedDonateButton> with Single
           child: MouseRegion(
             cursor: SystemMouseCursors.click,
             child: GestureDetector(
-              onTap: () => UrlUtils.launchUrlOrShow(context, 'https://paypal.me/blassgohuh?country.x=EC&locale.x=es_XC'),
+              onTap: () => UrlUtils.launchUrlOrShow(context, 'https://buymeacoffee.com/blassgo'),
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
@@ -223,6 +224,7 @@ class _AppManagerPageState extends State<AppManagerPage> {
   final _searchController = TextEditingController();
   String? _stateFilter = 'all';
   String? _systemFilter = 'all';
+  String? _checkFilter = 'all';
   double _panelHeight = 220;
   bool _isPanelVisible = true;
   bool _loadIcons = false;
@@ -243,16 +245,34 @@ class _AppManagerPageState extends State<AppManagerPage> {
     {'value': '0', 'text': 'User'},
   ];
 
-  List<Map<String, dynamic>> get _filteredData => ManagerService.apps.values
-      .where((item) =>
-          (item['name'].toLowerCase().contains(_searchController.text.toLowerCase()) ||
-              item['package'].toLowerCase().contains(_searchController.text.toLowerCase())) &&
-          (_stateFilter == 'all' || item['state'].toString() == _stateFilter) &&
-          (_systemFilter == 'all' || item['isSystem'] == (_systemFilter == '1')))
-      .toList();
+  final List<Map<String, String>> checkItems = [
+    {'value': 'all', 'text': 'Any'},
+    {'value': '1', 'text': 'Checked'},
+    {'value': '0', 'text': 'Unchecked'},
+    {'value': 'applicable', 'text': 'Applicable'},
+  ];
+
+  List<Map<String, dynamic>> get _filteredData => ManagerService.apps.values.where((item) {
+    final matchesSearch = (item['name']?.toString().toLowerCase().contains(_searchController.text.toLowerCase()) ?? false) ||
+        (item['package']?.toString().toLowerCase().contains(_searchController.text.toLowerCase()) ?? false);
+    final matchesState = _stateFilter == 'all' || (item['state']?.toString() == _stateFilter);
+    final matchesSystem = _systemFilter == 'all' || (item['isSystem'] == (_systemFilter == '1'));
+    final state = item['state'] as int?;
+    final isChecked = item['isChecked'] as bool?;
+    final doBefore = item['doBefore'] as String?;
+    final matchesCheck = _checkFilter == 'all' ? true :
+        _checkFilter == '1' ? (item['isChecked'] == true) :
+        _checkFilter == '0' ? (item['isChecked'] == false) :
+        (state != null && isChecked != null) &&
+            (doBefore == 'install-disable' ||
+                (state > 0 && isChecked == false) ||
+                (state == 0 && isChecked == true) ||
+                (state < 0 && isChecked == true));
+    return matchesSearch && matchesState && matchesSystem && matchesCheck;
+  }).toList();
 
   void _togglePanel() => setState(() {
-        _isPanelVisible = !_isPanelVisible;
+         _isPanelVisible = !_isPanelVisible;
         _panelHeight = _isPanelVisible ? 220 : 0;
       });
 
@@ -297,6 +317,14 @@ class _AppManagerPageState extends State<AppManagerPage> {
               tooltip: 'View last log',
               icon: const Icon(Icons.article),
               onPressed: () => AdbService.lastLog != null ? Alert.showLog(context, AdbService.lastLog!) : null,
+            ),
+            IconButton(
+              tooltip: 'Import community data',
+              icon: const Icon(Icons.add_circle),
+              onPressed: () => showDialog(
+                context: context,
+                builder: (_) => ReposOverlay(refreshUI: () => setState(() {})),
+              ),
             ),
             IconButton(
               tooltip: 'Settings',
@@ -372,6 +400,13 @@ class _AppManagerPageState extends State<AppManagerPage> {
                     value: _systemFilter,
                     items: systemItems,
                     onChanged: (value) => setState(() => _systemFilter = value),
+                  ),
+                  const SizedBox(width: 8),
+                  _buildDropdownButton(
+                    label: 'Check',
+                    value: _checkFilter,
+                    items: checkItems,
+                    onChanged: (value) => setState(() => _checkFilter = value),
                   ),
                 ],
               ),

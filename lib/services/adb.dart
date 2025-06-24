@@ -42,13 +42,24 @@ class AdbService {
     return _isAdbAvailable;
   }
 
+  static Map<String, String> _withEnv() {
+    final env = Map<String, String>.from(Platform.environment);
+    if (ConfigUtils.adbPath != null) {
+      final adbDir = File(ConfigUtils.adbPath!).parent.path;
+      env['PATH'] = '${env['PATH']}${Platform.pathSeparator}$adbDir';
+    }
+    return env;
+  }
+
   static Future<String> runAdb(List<String> args, {bool toLog = true, bool toLogIfError = false, bool toLowerCase = true, int exitCode = 0}) async {
     try {
+      final adbExecutable = ConfigUtils.adbPath ?? 'adb';
       final result = await Process.run(
-        'adb',
+        adbExecutable,
         _withSerial(args),
         stdoutEncoding: utf8,
         stderrEncoding: utf8,
+        environment: _withEnv(),
       );
       final output = ((result.stdout ?? '').toString() + (result.stderr ?? '').toString());
       final lower = output.toLowerCase();
@@ -69,7 +80,8 @@ class AdbService {
     bool toLogIfError = false
   }) async {
     try {
-      final process = await Process.start('adb', _withSerial(args));
+      final adbExecutable = ConfigUtils.adbPath ?? 'adb';
+      final process = await Process.start(adbExecutable, _withSerial(args), environment: _withEnv());
       bool hasError = false;
 
       await for (var line in process.stdout.transform(utf8.decoder).transform(const LineSplitter())) {
@@ -139,7 +151,9 @@ class AdbService {
         } else {
           final productMatch = RegExp(r'(device product|device):(\S+)').firstMatch(line);
           if (productMatch != null) {
-            name = productMatch.group(2)!;
+            name = productMatch.group(2)!
+
+;
           } else {
             name = 'Device $serialN';
           }
@@ -236,7 +250,7 @@ class AdbService {
 
   static Future<bool> selectDevice(BuildContext context, {showSelector = false, Future<void> Function()? loadAppsCallback}) async {
     if (!await isAdbAvailable()) {
-      Alert.showWarning(context, 'ADB is not installed.\n\nSuggested action:', command: getInstallCommand());
+      Alert.showWarning(context, 'ADB is not installed.', command: getInstallCommand());
       return false;
     }
 
@@ -271,7 +285,7 @@ class AdbService {
   static Future<bool> ensureDevice(context) async {
     if (currentDevice == null) {
       if (!await isAdbAvailable()) {
-        Alert.showWarning(context,'ADB is not installed.\n\nSuggested action:', command: getInstallCommand());
+        Alert.showWarning(context,'ADB is not installed.', command: getInstallCommand());
         return false;
       }
       //LoadingOverlay.show(context, 'Finding devices...');

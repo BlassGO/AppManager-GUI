@@ -3,6 +3,7 @@ import 'package:app_manager/services/adb.dart';
 import 'package:app_manager/services/manager.dart';
 import 'package:app_manager/overlays/alert.dart';
 import 'package:app_manager/utils/config.dart';
+import 'package:app_manager/utils/file_manager.dart';
 
 class ConfigOverlay extends StatefulWidget {
   final VoidCallback? onConnect;
@@ -20,6 +21,7 @@ class _ConfigOverlayState extends State<ConfigOverlay> with TickerProviderStateM
   final ScrollController _scrollController = ScrollController();
   final ValueNotifier<bool> _showScrollHint = ValueNotifier(false);
   bool _optionsExpanded = false;
+  bool _actionsExpanded = false;
   late AnimationController _introAnimationController;
   late Animation<double> _introAnimation;
   late AnimationController _expandAnimationController;
@@ -79,7 +81,7 @@ class _ConfigOverlayState extends State<ConfigOverlay> with TickerProviderStateM
       final pixels = _scrollController.position.pixels;
       if (pixels > 0 && _showScrollHint.value) {
         _showScrollHint.value = false;
-      } else if (maxScrollExtent > 50 && pixels == 0) {
+      } else if (maxScrollExtent > 30 && pixels == 0) {
         _showScrollHint.value = true;
       }
     }
@@ -105,7 +107,7 @@ class _ConfigOverlayState extends State<ConfigOverlay> with TickerProviderStateM
     } else {
       Alert.showWarning(
         context,
-        'Could not connect to $ip:$port.\n\nMake sure the device is on the same network'
+        'Could not connect to $ip:$port.\n\nMake sure the device is on the same network',
       );
     }
   }
@@ -128,6 +130,7 @@ class _ConfigOverlayState extends State<ConfigOverlay> with TickerProviderStateM
     const double optionItemHeight = 44.0;
     const double padding = 8.0;
     const double expandedOptionsMaxHeight = optionItemHeight * 3 + padding;
+    const double expandedActionsMaxHeight = 48.0 + padding;
 
     return AlertDialog(
       backgroundColor: Colors.grey[900],
@@ -147,6 +150,7 @@ class _ConfigOverlayState extends State<ConfigOverlay> with TickerProviderStateM
                   } else {
                     _expandAnimationController.reverse(from: 1.0);
                   }
+                  _handleScroll();
                 });
               },
               child: SizedBox(
@@ -185,11 +189,11 @@ class _ConfigOverlayState extends State<ConfigOverlay> with TickerProviderStateM
                         ? const SizedBox.shrink()
                         : Container(
                             height: _introAnimation.value,
-                            color: Colors.grey[800]?.withOpacity(0.5),
+                            color: Colors.grey[800]!.withOpacity(0.5),
                           ),
-                ),
-              );
-              }
+                  ),
+                );
+              },
             ),
             ClipRect(
               child: AnimatedSize(
@@ -239,6 +243,75 @@ class _ConfigOverlayState extends State<ConfigOverlay> with TickerProviderStateM
                             ConfigUtils.refreshIcons = value ?? false;
                             ConfigUtils.save();
                           },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () {
+                setState(() {
+                  _actionsExpanded = !_actionsExpanded;
+                  if (_actionsExpanded) {
+                    _expandAnimationController.forward(from: 0.0);
+                  } else {
+                    _expandAnimationController.reverse(from: 1.0);
+                  }
+                  _handleScroll();
+                });
+              },
+              child: SizedBox(
+                width: double.infinity,
+                child: Container(
+                  color: Colors.transparent,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'ACTIONS',
+                          style: TextStyle(color: Colors.white70, fontWeight: FontWeight.bold, fontSize: 14),
+                        ),
+                        Icon(
+                          _actionsExpanded ? Icons.expand_less : Icons.expand_more,
+                          color: Colors.white70,
+                          size: 20,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            ClipRect(
+              child: AnimatedSize(
+                duration: const Duration(milliseconds: 800),
+                curve: Curves.easeInOut,
+                child: SizedBox(
+                  height: _actionsExpanded ? expandedActionsMaxHeight : 0.0,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        color: Colors.transparent,
+                        padding: const EdgeInsets.only(left: 24.0),
+                        child: Tooltip(
+                          message: 'Select the path where the ADB executable is located',
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.grey[800],
+                              foregroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            onPressed: () => FileManager.selectAdbFolder(context),
+                            child: Text('Select ADB'),
+                          ),
                         ),
                       ),
                     ],
