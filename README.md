@@ -1,5 +1,3 @@
-# Android App Manager - GUI
-
 <p align="center"><img src="pages/images/banner.jpg" style="width:600px;height:auto;"></p>
 
 **App Manager GUI** is an open-source Flutter application. It leverages the [App Manager tool](https://github.com/BlassGO/App_Manager), a DalvikVM fragment, to extract detailed app information (icons, package details) without requiring app installation on the device.
