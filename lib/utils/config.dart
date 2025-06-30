@@ -5,11 +5,15 @@ import 'package:path_provider/path_provider.dart';
 class ConfigUtils {
   static String? lastWirelessIp;
   static String? lastWirelessPort;
+  static String? currentLanguage;
+  static bool isFirstLaunch = true;
   static bool useWireless = false;
   static bool neverUninstallApps = false;
   static bool exportAllApps = false;
   static bool refreshIcons = false;
   static String? adbPath;
+  static List<String> firstSteps = [];
+  static Map<String, String> availableLanguages = {};
 
   static Future<File> _getConfigFile() async {
     final dir = await getApplicationSupportDirectory();
@@ -25,6 +29,9 @@ class ConfigUtils {
       'exportAllApps': exportAllApps,
       'refreshIcons': refreshIcons,
       'adbPath': adbPath,
+      'firstSteps': firstSteps,
+      'currentLanguage': currentLanguage,
+      'isFirstLaunch': isFirstLaunch,
     };
     await file.writeAsString(jsonEncode(config));
   }
@@ -40,7 +47,16 @@ class ConfigUtils {
         exportAllApps = config['exportAllApps'] ?? false;
         refreshIcons = config['refreshIcons'] ?? false;
         adbPath = config['adbPath'];
+        firstSteps = List<String>.from(config['firstSteps'] ?? []);
+        currentLanguage = config['currentLanguage'] ?? 'en';
+        isFirstLaunch = config['isFirstLaunch'] ?? true;
+      } else {
+        currentLanguage = 'en';
+        isFirstLaunch = true;
       }
-    } catch (_) {}
+    } catch (e) {
+      currentLanguage = 'en';
+      isFirstLaunch = true;
+    }
   }
 }

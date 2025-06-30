@@ -1,0 +1,10 @@
+[
+  {"name": "English", "file_name": "en.xml"},
+  {"name": "Español", "file_name": "es.xml"},
+  {"name": "Português (Brasil)", "file_name": "pt.xml"},
+  {"name": "日本語", "file_name": "ja.xml"},
+  {"name": "中文 (简体)", "file_name": "zh.xml"},
+  {"name": "Bahasa Indonesia", "file_name": "id.xml"},
+  {"name": "Русский", "file_name": "ru.xml"},
+  {"name": "Română", "file_name": "ro.xml"}
+]

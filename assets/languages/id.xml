@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<translations>
+  <!-- Setup -->
+  <translation key="welcome">Selamat Datang!</translation>
+  <translation key="welcome_message">Hapus aplikasi yang tidak diinginkan dengan mudah dan bagikan daftar debloat Anda</translation>
+  <translation key="search_languages_hint">Cari bahasa Anda...</translation>
+  <translation key="no_languages_found">Tidak ada kecocokan</translation>
+  <translation key="error_loading_languages">Bahasa gagal dimuat</translation>
+  <translation key="continue_button">Lanjutkan</translation>
+
+  <!-- UI Button Labels -->
+  <translation key="check_all">Centang semua</translation>
+  <translation key="uncheck_all">Hapus centang</translation>
+  <translation key="restore_all">Pulihkan semua</translation>
+  <translation key="apply_button" maxLength="10">TERAPKAN</translation>
+  <translation key="skip">LEWATI</translation>
+  <translation key="support">Dukungan</translation>
+  <translation key="reload" maxLength="10">Muat ulang</translation>
+  <translation key="device" maxLength="10">Perangkat</translation>
+  <translation key="log" maxLength="10">Log</translation>
+  <translation key="browse" maxLength="10">Jelajahi</translation>
+  <translation key="settings" maxLength="10">Pengaturan</translation>
+  <translation key="import" maxLength="10">Impor</translation>
+  <translation key="export" maxLength="10">Ekspor</translation>
+  <translation key="connect">Hubungkan</translation>
+  <translation key="disconnect">Putuskan</translation>
+  <translation key="select_adb">Pilih ADB</translation>
+  <translation key="close">Tutup</translation>
+  <translation key="ok">OK</translation>
+  <translation key="select">Pilih</translation>
+  <translation key="cancel">Batal</translation>
+  <translation key="copy">Salin</translation>
+  <translation key="select_adb_folder">Pilih folder ADB</translation>
+
+  <!-- Tooltips and Hints -->
+  <translation key="apply_button_tip" maxLength="80">Terapkan perubahan ke perangkat</translation>
+  <translation key="checkbox_tip" maxLength="80">Hapus centang untuk menghapus, centang untuk mengaktifkan ulang atau memasang ulang</translation>
+  <translation key="support_tooltip">Dukung pengembang ☕</translation>
+  <translation key="view_source">Lihat kode sumber</translation>
+  <translation key="reload_tooltip">Muat ulang daftar aplikasi</translation>
+  <translation key="device_tooltip">Pilih perangkat</translation>
+  <translation key="log_tooltip">Lihat log terakhir</translation>
+  <translation key="browse_tooltip">Impor data komunitas</translation>
+  <translation key="settings_tooltip">Pengaturan</translation>
+  <translation key="icon_view_tooltip">Alihkan tampilan ikon</translation>
+  <translation key="import_tooltip">Impor tindakan</translation>
+  <translation key="export_tooltip">Ekspor tindakan saat ini</translation>
+  <translation key="select_adb_tooltip">Pilih lokasi file eksekusi ADB</translation>
+  <translation key="never_uninstall_tooltip">Hanya nonaktifkan aplikasi dan hapus datanya</translation>
+  <translation key="export_all_apps_tooltip">Ekspor semua aplikasi, meski tanpa perubahan</translation>
+  <translation key="refresh_icons_tooltip">Selalu hapus cache ikon untuk memperbarui</translation>
+  <translation key="open_in_browser">Buka di browser</translation>
+  <translation key="search_repos_hint">Cari repositori...</translation>
+  <translation key="search_repos_tooltip">Cari repositori</translation>
+  <translation key="reload_repos_tooltip">Muat ulang repositori</translation>
+  <translation key="open_github_tooltip">Buka GitHub</translation>
+  <translation key="import_repo_apps_tooltip">Impor aplikasi repositori</translation>
+
+  <!-- Error and Warning Messages -->
+  <translation key="copied_to_clipboard">Disalin ke clipboard!</translation>
+  <translation key="connect_error_empty">Masukkan IP dan port.</translation>
+  <translation key="connect_error_network">Gagal terhubung ke</translation>
+  <translation key="connect_error_network_check">Pastikan perangkat berada di jaringan yang sama</translation>
+  <translation key="disconnect_error">Gagal memutuskan koneksi. Lihat log untuk detail.</translation>
+  <translation key="device_offline_message">Perangkat offline.&#10;&#10;Nyalakan layar dan buka kunci.</translation>
+  <translation key="failed_open_url">Gagal membuka URL di browser.</translation>
+  <translation key="adb_not_installed">ADB tidak terpasang</translation>
+  <translation key="adb_path_instruction">Jika ADB terpasang, pastikan ada di PATH sistem atau pilih folder dengan file eksekusi.</translation>
+  <translation key="adb_install_instruction">Belum terpasang? Dapatkan dengan cara ini:</translation>
+  <translation key="log_copied">Log disalin!</translation>
+  <translation key="execution_log">Log eksekusi</translation>
+  <translation key="error_fetching_repos">Gagal mengambil repositori:</translation>
+  <translation key="error_searching_repos">Gagal mencari repositori:</translation>
+  <translation key="error_importing_repo">Gagal mengimpor repositori:</translation>
+  <translation key="no_devices_found">Tidak ada perangkat ditemukan. Hubungkan perangkat.</translation>
+  <translation key="device_unauthorized">Perangkat tidak diizinkan. Aktifkan debugging USB.</translation>
+  <translation key="failed_transfer_app_manager">Gagal mentransfer app_manager ke perangkat.&#10;&#10;Lihat log untuk detail.</translation>
+  <translation key="error_preparing_app_manager">Gagal menyiapkan app_manager:</translation>
+  <translation key="failed_extract_icons">Gagal mengekstrak ikon.&#10;&#10;Lihat log untuk detail.</translation>
+  <translation key="failed_pull_icons">Gagal mengambil icons.zip.&#10;&#10;Lihat log untuk detail.</translation>
+  <translation key="failed_extract_zip_icons">Gagal mengekstrak ikon dari zip.&#10;&#10;Lihat log untuk detail.</translation>
+  <translation key="failed_load_app_list">Gagal memuat daftar aplikasi.&#10;&#10;Lihat log untuk detail.</translation>
+  <translation key="no_valid_adb_executable">Tidak ditemukan file eksekusi ADB yang valid di folder.</translation>
+  <translation key="no_actions_to_export">Tidak ada tindakan untuk diekspor.</translation>
+  <translation key="invalid_json">JSON tidak valid.</translation>
+  <translation key="icon_file_not_found">File ikon tidak ditemukan.</translation>
+  <translation key="could_not_open_url">Gagal membuka URL.&#10;&#10;Gunakan tautan ini:</translation>
+
+  <!-- Messages -->
+  <translation key="device_selected">Perangkat dipilih:</translation>
+  <translation key="finding_devices">Mencari perangkat...</translation>
+  <translation key="no_apps_loaded">Tidak ada aplikasi dimuat.</translation>
+  <translation key="no_changes_to_apply">Tidak ada perubahan untuk diterapkan.</translation>
+  <translation key="commands_executed_successfully">Perintah berhasil dijalankan!</translation>
+  <translation key="extracting_icons">Mengekstrak ikon...</translation>
+  <translation key="pulling_icons">Mengambil ikon...</translation>
+  <translation key="applying_changes">Menerapkan perubahan...</translation>
+  <translation key="adb_path_set">Path ADB ditetapkan ke</translation>
+  <translation key="exported_to">Diexpor ke</translation>
+  <translation key="applied_actions">Diterapkan</translation>
+  <translation key="actions_suffix">tindakan.</translation>
+  <translation key="icon_exported_to">Ikon diekspor ke</translation>
+
+  <!-- Filter and Status Labels -->
+  <translation key="no_matches">Tidak ada kecocokan</translation>
+  <translation key="icon_view">Tampilan ikon</translation>
+  <translation key="activate" maxLength="15">Aktifkan</translation>
+  <translation key="install" maxLength="15">Pasang</translation>
+  <translation key="uninstall" maxLength="15">Hapus</translation>
+  <translation key="deactivate" maxLength="15">Nonaktifkan</translation>
+  <translation key="total" maxLength="15">Total</translation>
+  <translation key="action" maxLength="15">Tindakan</translation>
+  <translation key="count" maxLength="15">Jumlah</translation>
+  <translation key="all_apps">Semua aplikasi</translation>
+  <translation key="enabled">Diaktifkan</translation>
+  <translation key="disabled">Dinonaktifkan</translation>
+  <translation key="uninstalled">Dihapus</translation>
+  <translation key="system_user">Sistem & Pengguna</translation>
+  <translation key="system">Sistem</translation>
+  <translation key="user">Pengguna</translation>
+  <translation key="any">Apa saja</translation>
+  <translation key="checked">Dicentang</translation>
+  <translation key="unchecked">Tidak dicentang</translation>
+  <translation key="applicable">Berlaku</translation>
+
+  <!-- App Information Labels -->
+  <translation key="name" maxLength="15">Nama</translation>
+  <translation key="id" maxLength="15">ID</translation>
+  <translation key="package" maxLength="15">Paket</translation>
+  <translation key="type" maxLength="15">Tipe</translation>
+  <translation key="path" maxLength="15">Jalur</translation>
+  <translation key="hide">Sembunyikan</translation>
+  <translation key="info">Info</translation>
+  <translation key="export_icon">Ekspor ikon</translation>
+  <translation key="unknown_repo_name">Nama tidak dikenal</translation>
+  <translation key="unknown_owner">Tidak dikenal</translation>
+  <translation key="no_description">Tidak ada deskripsi</translation>
+  <translation key="device_fallback">Perangkat</translation>
+
+  <!-- Input Field Hints -->
+  <translation key="search_hint">Cari aplikasi atau paket...</translation>
+  <translation key="state_label">Status</translation>
+  <translation key="system_label">Sistem</translation>
+  <translation key="check_label">Centang</translation>
+  <translation key="device_ip">IP Perangkat</translation>
+  <translation key="ip_hint">mis. 192.168.1.100</translation>
+  <translation key="port">Port</translation>
+  <translation key="port_hint">mis. 5555</translation>
+  <translation key="tcp_ip">TCP/IP</translation>
+  <translation key="swipe_down">Geser ke bawah</translation>
+
+  <!-- Configuration Options -->
+  <translation key="options">Opsi</translation>
+  <translation key="actions">Tindakan</translation>
+  <translation key="never_uninstall">Jangan hapus, hanya nonaktifkan</translation>
+  <translation key="export_all_apps">Ekspor daftar semua aplikasi</translation>
+  <translation key="refresh_icons">Perbarui semua ikon</translation>
+  <translation key="language">Bahasa</translation>
+
+  <!-- Device Selector -->
+  <translation key="select_device">Pilih Perangkat</translation>
+  <translation key="connection">Koneksi</translation>
+  <translation key="serial">Serial</translation>
+
+  <!-- File Picker Dialogs -->
+  <translation key="select_directory">Pilih direktori</translation>
+  <translation key="export_actions_json">Ekspor tindakan sebagai JSON</translation>
+  <translation key="import_actions_json">Impor tindakan JSON</translation>
+  <translation key="export_app_icon">Ekspor ikon aplikasi</translation>
+</translations>

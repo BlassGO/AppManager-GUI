@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<translations>
+  <!-- Setup -->
+  <translation key="welcome">ようこそ！</translation>
+  <translation key="welcome_message">不要なアプリを簡単に削除し、カスタム軽量化リストを共有</translation>
+  <translation key="search_languages_hint">言語を検索...</translation>
+  <translation key="no_languages_found">一致なし</translation>
+  <translation key="error_loading_languages">言語を読み込めませんでした</translation>
+  <translation key="continue_button">続ける</translation>
+
+  <!-- UI Button Labels -->
+  <translation key="check_all">すべて選択</translation>
+  <translation key="uncheck_all">すべて解除</translation>
+  <translation key="restore_all">すべて復元</translation>
+  <translation key="apply_button" maxLength="10">適用</translation>
+  <translation key="skip">スキップ</translation>
+  <translation key="support">サポート</translation>
+  <translation key="reload" maxLength="10">再読み込み</translation>
+  <translation key="device" maxLength="10">デバイス</translation>
+  <translation key="log" maxLength="10">ログ</translation>
+  <translation key="browse" maxLength="10">閲覧</translation>
+  <translation key="settings" maxLength="10">設定</translation>
+  <translation key="import" maxLength="10">インポート</translation>
+  <translation key="export" maxLength="10">エクスポート</translation>
+  <translation key="connect">接続</translation>
+  <translation key="disconnect">切断</translation>
+  <translation key="select_adb">ADBを選択</translation>
+  <translation key="close">閉じる</translation>
+  <translation key="ok">OK</translation>
+  <translation key="select">選択</translation>
+  <translation key="cancel">キャンセル</translation>
+  <translation key="copy">コピー</translation>
+  <translation key="select_adb_folder">ADBフォルダを選択</translation>
+
+  <!-- Tooltips and Hints -->
+  <translation key="apply_button_tip" maxLength="80">デバイスに変更を適用</translation>
+  <translation key="checkbox_tip" maxLength="80">チェックを外してアンインストール、チェックして再有効化または再インストール</translation>
+  <translation key="support_tooltip">開発者をサポート ☕</translation>
+  <translation key="view_source">ソースコードを表示</translation>
+  <translation key="reload_tooltip">アプリリストを再読み込み</translation>
+  <translation key="device_tooltip">デバイスを選択</translation>
+  <translation key="log_tooltip">最新のログを表示</translation>
+  <translation key="browse_tooltip">コミュニティデータをインポート</translation>
+  <translation key="settings_tooltip">設定</translation>
+  <translation key="icon_view_tooltip">アイコンビューを切り替え</translation>
+  <translation key="import_tooltip">アクションをインポート</translation>
+  <translation key="export_tooltip">現在のアクションをエクスポート</translation>
+  <translation key="select_adb_tooltip">ADB実行ファイルの場所を選択</translation>
+  <translation key="never_uninstall_tooltip">アプリを無効化し、データを削除するのみ</translation>
+  <translation key="export_all_apps_tooltip">変更がなくても全アプリをエクスポート</translation>
+  <translation key="refresh_icons_tooltip">アイコンキャッシュを常にクリアして更新</translation>
+  <translation key="open_in_browser">ブラウザで開く</translation>
+  <translation key="search_repos_hint">リポジトリを検索...</translation>
+  <translation key="search_repos_tooltip">リポジトリを検索</translation>
+  <translation key="reload_repos_tooltip">リポジトリを再読み込み</translation>
+  <translation key="open_github_tooltip">GitHubを開く</translation>
+  <translation key="import_repo_apps_tooltip">リポジトリアプリをインポート</translation>
+
+  <!-- Error and Warning Messages -->
+  <translation key="copied_to_clipboard">クリップボードにコピーしました！</translation>
+  <translation key="connect_error_empty">IPとポートを入力してください。</translation>
+  <translation key="connect_error_network">接続できませんでした：</translation>
+  <translation key="connect_error_network_check">デバイスが同じネットワークにあるか確認してください</translation>
+  <translation key="disconnect_error">切断できませんでした。ログを確認してください。</translation>
+  <translation key="device_offline_message">デバイスがオフラインです。&#10;&#10;画面をオンにしてロックを解除してください。</translation>
+  <translation key="failed_open_url">ブラウザでURLを開けませんでした。</translation>
+  <translation key="adb_not_installed">ADBがインストールされていません</translation>
+  <translation key="adb_path_instruction">ADBがインストール済みの場合、システムPATHに追加するか、実行ファイルのフォルダを選択してください。</translation>
+  <translation key="adb_install_instruction">インストールされていませんか？次の方法で入手：</translation>
+  <translation key="log_copied">ログをコピーしました！</translation>
+  <translation key="execution_log">実行ログ</translation>
+  <translation key="error_fetching_repos">リポジトリの取得エラー：</translation>
+  <translation key="error_searching_repos">リポジトリ検索エラー：</translation>
+  <translation key="error_importing_repo">リポジトリのインポートエラー：</translation>
+  <translation key="no_devices_found">デバイスが見つかりません。デバイスを接続してください。</translation>
+  <translation key="device_unauthorized">デバイスが認証されていません。USBデバッグを有効にしてください。</translation>
+  <translation key="failed_transfer_app_manager">app_managerの転送に失敗しました。&#10;&#10;ログを確認してください。</translation>
+  <translation key="error_preparing_app_manager">app_managerの準備エラー：</translation>
+  <translation key="failed_extract_icons">アイコンの抽出に失敗しました。&#10;&#10;ログを確認してください。</translation>
+  <translation key="failed_pull_icons">icons.zipの取得に失敗しました。&#10;&#10;ログを確認してください。</translation>
+  <translation key="failed_extract_zip_icons">zipからアイコンの抽出に失敗しました。&#10;&#10;ログを確認してください。</translation>
+  <translation key="failed_load_app_list">アプリリストの読み込みに失敗しました。&#10;&#10;ログを確認してください。</translation>
+  <translation key="no_valid_adb_executable">選択したフォルダに有効なADB実行ファイルがありません。</translation>
+  <translation key="no_actions_to_export">エクスポートするアクションがありません。</translation>
+  <translation key="invalid_json">無効なJSONです。</translation>
+  <translation key="icon_file_not_found">アイコンファイルが見つかりません。</translation>
+  <translation key="could_not_open_url">URLを開けませんでした。&#10;&#10;このリンクを使用してください：</translation>
+
+  <!-- Messages -->
+  <translation key="device_selected">デバイスを選択しました：</translation>
+  <translation key="finding_devices">デバイスを検索中...</translation>
+  <translation key="no_apps_loaded">アプリが読み込まれていません。</translation>
+  <translation key="no_changes_to_apply">適用する変更はありません。</translation>
+  <translation key="commands_executed_successfully">コマンドが正常に実行されました！</translation>
+  <translation key="extracting_icons">アイコンを抽出中...</translation>
+  <translation key="pulling_icons">アイコンを取得中...</translation>
+  <translation key="applying_changes">変更を適用中...</translation>
+  <translation key="adb_path_set">ADBパスを設定：</translation>
+  <translation key="exported_to">エクスポート先：</translation>
+  <translation key="applied_actions">適用済み</translation>
+  <translation key="actions_suffix">アクション。</translation>
+  <translation key="icon_exported_to">アイコンをエクスポート：</translation>
+
+  <!-- Filter and Status Labels -->
+  <translation key="no_matches">一致なし</translation>
+  <translation key="icon_view">アイコンビュー</translation>
+  <translation key="activate" maxLength="15">有効化</translation>
+  <translation key="install" maxLength="15">インストール</translation>
+  <translation key="uninstall" maxLength="15">アンインストール</translation>
+  <translation key="deactivate" maxLength="15">無効化</translation>
+  <translation key="total" maxLength="15">合計</translation>
+  <translation key="action" maxLength="15">アクション</translation>
+  <translation key="count" maxLength="15">カウント</translation>
+  <translation key="all_apps">すべてのアプリ</translation>
+  <translation key="enabled">有効</translation>
+  <translation key="disabled">無効</translation>
+  <translation key="uninstalled">アンインストール済</translation>
+  <translation key="system_user">システムとユーザー</translation>
+  <translation key="system">システム</translation>
+  <translation key="user">ユーザー</translation>
+  <translation key="any">任意</translation>
+  <translation key="checked">選択済み</translation>
+  <translation key="unchecked">未選択</translation>
+  <translation key="applicable">適用可能</translation>
+
+  <!-- App Information Labels -->
+  <translation key="name" maxLength="15">名前</translation>
+  <translation key="id" maxLength="15">ID</translation>
+  <translation key="package" maxLength="15">パッケージ</translation>
+  <translation key="type" maxLength="15">タイプ</translation>
+  <translation key="path" maxLength="15">パス</translation>
+  <translation key="hide">非表示</translation>
+  <translation key="info">情報</translation>
+  <translation key="export_icon">アイコンをエクスポート</translation>
+  <translation key="unknown_repo_name">不明な名前</translation>
+  <translation key="unknown_owner">不明</translation>
+  <translation key="no_description">説明なし</translation>
+  <translation key="device_fallback">デバイス</translation>
+
+  <!-- Input Field Hints -->
+  <translation key="search_hint">アプリまたはパッケージを検索...</translation>
+  <translation key="state_label">状態</translation>
+  <translation key="system_label">システム</translation>
+  <translation key="check_label">チェック</translation>
+  <translation key="device_ip">デバイスIP</translation>
+  <translation key="ip_hint">例: 192.168.1.100</translation>
+  <translation key="port">ポート</translation>
+  <translation key="port_hint">例: 5555</translation>
+  <translation key="tcp_ip">TCP/IP</translation>
+  <translation key="swipe_down">下にスワイプ</translation>
+
+  <!-- Configuration Options -->
+  <translation key="options">オプション</translation>
+  <translation key="actions">アクション</translation>
+  <translation key="never_uninstall">アンインストールせず無効化のみ</translation>
+  <translation key="export_all_apps">すべてのアプリリストをエクスポート</translation>
+  <translation key="refresh_icons">すべてのアイコンを更新</translation>
+  <translation key="language">言語</translation>
+
+  <!-- Device Selector -->
+  <translation key="select_device">デバイスを選択</translation>
+  <translation key="connection">接続</translation>
+  <translation key="serial">シリアル</translation>
+
+  <!-- File Picker Dialogs -->
+  <translation key="select_directory">ディレクトリを選択</translation>
+  <translation key="export_actions_json">アクションをJSONとしてエクスポート</translation>
+  <translation key="import_actions_json">JSONアクションをインポート</translation>
+  <translation key="export_app_icon">アプリアイコンをエクスポート</translation>
+</translations>

@@ -1,30 +1,43 @@
+import 'dart:io';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:app_manager/services/adb.dart';
 import 'package:app_manager/services/manager.dart';
 import 'package:app_manager/overlays/alert.dart';
 import 'package:app_manager/utils/config.dart';
 import 'package:app_manager/utils/file_manager.dart';
+import 'package:animate_do/animate_do.dart';
+import 'package:app_manager/utils/localization.dart';
+import 'package:app_manager/widgets/language_selector.dart';
 
 class ConfigOverlay extends StatefulWidget {
   final VoidCallback? onConnect;
   final VoidCallback? refreshUI;
   const ConfigOverlay({this.onConnect, this.refreshUI, super.key});
+
   @override
-  State<ConfigOverlay> createState() => _ConfigOverlayState();
+  State<ConfigOverlay> createState() => ConfigOverlayState();
 }
 
-class _ConfigOverlayState extends State<ConfigOverlay> with TickerProviderStateMixin {
+class ConfigOverlayState extends State<ConfigOverlay> with TickerProviderStateMixin {
   final TextEditingController _ipController = TextEditingController();
   final TextEditingController _portController = TextEditingController(text: '5555');
   bool _connecting = false;
   bool _disconnecting = false;
   final ScrollController _scrollController = ScrollController();
   final ValueNotifier<bool> _showScrollHint = ValueNotifier(false);
+
+  late AnimationController _optionsAnimationController;
+  late Animation<double> _optionsAnimation;
   bool _optionsExpanded = false;
+
+  late AnimationController _actionsAnimationController;
+  late Animation<double> _actionsAnimation;
   bool _actionsExpanded = false;
-  late AnimationController _introAnimationController;
-  late Animation<double> _introAnimation;
-  late AnimationController _expandAnimationController;
+
+  late AnimationController _languageAnimationController;
+  late Animation<double> _languageAnimation;
+  bool _languageExpanded = false;
 
   @override
   void initState() {
@@ -33,36 +46,32 @@ class _ConfigOverlayState extends State<ConfigOverlay> with TickerProviderStateM
     _portController.text = ConfigUtils.lastWirelessPort ?? '5555';
     _scrollController.addListener(_handleScroll);
 
-    _introAnimationController = AnimationController(
+    _optionsAnimationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 300),
     );
-    _introAnimation = Tween<double>(begin: 0.0, end: 20.0).animate(CurvedAnimation(
-      parent: _introAnimationController,
+    _optionsAnimation = CurvedAnimation(
+      parent: _optionsAnimationController,
       curve: Curves.easeInOut,
-    ))
-      ..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          _introAnimationController.reverse();
-        } else if (status == AnimationStatus.dismissed) {
-          _introAnimationController.stop();
-        }
-      });
+    );
 
-    _expandAnimationController = AnimationController(
+    _actionsAnimationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 800),
-    )..addStatusListener((status) {
-        if (status == AnimationStatus.completed || status == AnimationStatus.dismissed) {
-          _handleScroll();
-        }
-      });
+      duration: const Duration(milliseconds: 300),
+    );
+    _actionsAnimation = CurvedAnimation(
+      parent: _actionsAnimationController,
+      curve: Curves.easeInOut,
+    );
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        _introAnimationController.forward();
-      }
-    });
+    _languageAnimationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+    _languageAnimation = CurvedAnimation(
+      parent: _languageAnimationController,
+      curve: Curves.easeInOut,
+    );
   }
 
   @override
@@ -70,8 +79,11 @@ class _ConfigOverlayState extends State<ConfigOverlay> with TickerProviderStateM
     _scrollController.removeListener(_handleScroll);
     _scrollController.dispose();
     _showScrollHint.dispose();
-    _introAnimationController.dispose();
-    _expandAnimationController.dispose();
+    _ipController.dispose();
+    _portController.dispose();
+    _optionsAnimationController.dispose();
+    _actionsAnimationController.dispose();
+    _languageAnimationController.dispose();
     super.dispose();
   }
 
@@ -87,28 +99,60 @@ class _ConfigOverlayState extends State<ConfigOverlay> with TickerProviderStateM
     }
   }
 
+  void _toggleSection(String section) {
+    setState(() {
+      if (section == 'options') {
+        _optionsExpanded = !_optionsExpanded;
+        if (_optionsExpanded) {
+          _optionsAnimationController.forward();
+        } else {
+          _optionsAnimationController.reverse();
+        }
+      } else if (section == 'actions') {
+        _actionsExpanded = !_actionsExpanded;
+        if (_actionsExpanded) {
+          _actionsAnimationController.forward();
+        } else {
+          _actionsAnimationController.reverse();
+        }
+      } else if (section == 'language') {
+        _languageExpanded = !_languageExpanded;
+        if (_languageExpanded) {
+          _languageAnimationController.forward();
+        } else {
+          _languageAnimationController.reverse();
+        }
+      }
+    });
+  }
+
   Future<void> _connect() async {
     setState(() => _connecting = true);
     final ip = _ipController.text.trim();
     final port = _portController.text.trim();
     if (ip.isEmpty || port.isEmpty) {
-      Alert.showWarning(context, 'Please enter both IP and port.');
+      Alert.showWarning(context, Localization.translate('connect_error_empty'));
       setState(() => _connecting = false);
       return;
     }
-    ConfigUtils.lastWirelessIp = ip;
-    ConfigUtils.lastWirelessPort = port;
-    await ConfigUtils.save();
-    final ok = await AdbService.connectTcp(ip, port);
-    setState(() => _connecting = false);
-    if (ok) {
-      Navigator.of(context).pop();
-      widget.onConnect?.call();
-    } else {
-      Alert.showWarning(
-        context,
-        'Could not connect to $ip:$port.\n\nMake sure the device is on the same network',
-      );
+    try {
+      ConfigUtils.lastWirelessIp = ip;
+      ConfigUtils.lastWirelessPort = port;
+      await ConfigUtils.save();
+      final ok = await AdbService.connectTcp(ip, port);
+      setState(() => _connecting = false);
+      if (ok) {
+        Navigator.of(context).pop();
+        widget.onConnect?.call();
+      } else {
+        Alert.showWarning(
+          context,
+          '${Localization.translate('connect_error_network')} $ip:$port.\n\n${Localization.translate('connect_error_network_check')}',
+        );
+      }
+    } catch (e) {
+      setState(() => _connecting = false);
+      Alert.showWarning(context, Localization.translate('connect_error'));
     }
   }
 
@@ -116,201 +160,256 @@ class _ConfigOverlayState extends State<ConfigOverlay> with TickerProviderStateM
     final ip = _ipController.text.trim();
     final port = _portController.text.trim();
     setState(() => _disconnecting = true);
-    final ok = await AdbService.disconnectTcp(ip, port);
-    setState(() => _disconnecting = false);
-    if (ok) {
-      Navigator.of(context).pop();
-    } else {
-      Alert.showWarning(context, 'Could not disconnect. See log for details.');
+    try {
+      final ok = await AdbService.disconnectTcp(ip, port);
+      setState(() => _disconnecting = false);
+      if (ok) {
+        Navigator.of(context).pop();
+      } else {
+        Alert.showWarning(context, Localization.translate('disconnect_error'));
+      }
+    } catch (e) {
+      setState(() => _disconnecting = false);
+      Alert.showWarning(context, Localization.translate('disconnect_error'));
     }
+  }
+
+  Future<void> _selectLanguage(String languageCode) async {
+    try {
+      await Localization.loadLocale(languageCode);
+      if (mounted) {
+        setState(() {});
+        widget.refreshUI?.call();
+      }
+    } catch (e) {
+      if (mounted) {
+        Alert.showWarning(context, Localization.translate('error_selecting_language'));
+      }
+    }
+  }
+
+  Widget _buildExpandableSection({
+    required String title,
+    required bool expanded,
+    required VoidCallback onTap,
+    required Widget child,
+    required Animation<double> animation,
+  }) {
+    return Card(
+      elevation: 2.0,
+      color: Colors.grey[850],
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Column(
+        children: [
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: onTap,
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(title, style: const TextStyle(color: Colors.white70, fontWeight: FontWeight.bold, fontSize: 14)),
+                  Icon(expanded ? Icons.expand_less : Icons.expand_more, color: Colors.white70, size: 20),
+                ],
+              ),
+            ),
+          ),
+          SizeTransition(
+            sizeFactor: animation,
+            axisAlignment: -1.0,
+            child: AnimatedOpacity(
+              opacity: expanded ? 1.0 : 0.0,
+              duration: const Duration(milliseconds: 200),
+              child: Offstage(
+                offstage: !expanded && animation.value == 0.0,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
+                  child: child,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    const double optionItemHeight = 44.0;
-    const double padding = 8.0;
-    const double expandedOptionsMaxHeight = optionItemHeight * 3 + padding;
-    const double expandedActionsMaxHeight = 48.0 + padding;
+    const double padding = 12.0;
 
-    return AlertDialog(
-      backgroundColor: Colors.grey[900],
-      title: Text('Settings', style: TextStyle(color: Colors.white)),
-      content: SingleChildScrollView(
-        controller: _scrollController,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: () {
-                setState(() {
-                  _optionsExpanded = !_optionsExpanded;
-                  if (_optionsExpanded) {
-                    _expandAnimationController.forward(from: 0.0);
-                  } else {
-                    _expandAnimationController.reverse(from: 1.0);
-                  }
-                  _handleScroll();
-                });
-              },
-              child: SizedBox(
-                width: double.infinity,
-                child: Container(
-                  color: Colors.transparent,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'OPTIONS',
-                          style: TextStyle(color: Colors.white70, fontWeight: FontWeight.bold, fontSize: 14),
-                        ),
-                        Icon(
-                          _optionsExpanded ? Icons.expand_less : Icons.expand_more,
-                          color: Colors.white70,
-                          size: 20,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final dialogWidth = constraints.maxWidth * 0.7;
+        return Center(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minWidth: dialogWidth, maxWidth: dialogWidth),
+            child: AlertDialog(
+              backgroundColor: Colors.grey[900],
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              title: FadeIn(
+                duration: const Duration(milliseconds: 300),
+                child: Text(Localization.translate('settings'), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 20)),
               ),
-            ),
-            AnimatedBuilder(
-              animation: _introAnimation,
-              builder: (context, child) {
-                return AnimatedSize(
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeInOut,
-                  child: SizedBox(
-                    height: _introAnimationController.isDismissed ? 0.0 : null,
-                    child: _introAnimationController.isDismissed || _optionsExpanded
-                        ? const SizedBox.shrink()
-                        : Container(
-                            height: _introAnimation.value,
-                            color: Colors.grey[800]!.withOpacity(0.5),
-                          ),
-                  ),
-                );
-              },
-            ),
-            ClipRect(
-              child: AnimatedSize(
-                duration: const Duration(milliseconds: 800),
-                curve: Curves.easeInOut,
-                child: SizedBox(
-                  height: _optionsExpanded ? expandedOptionsMaxHeight : 0.0,
+              content: SizedBox(
+                width: dialogWidth,
+                child: SingleChildScrollView(
+                  controller: _scrollController,
+                  padding: const EdgeInsets.all(padding),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 24.0),
-                        child: OptionItem(
-                          title: 'Never uninstall, only deactivate',
-                          tooltip: 'Deactivate uninstallable apps and clear their data',
-                          value: ConfigUtils.neverUninstallApps,
-                          onChanged: (value) {
-                            setState(() {});
-                            ConfigUtils.neverUninstallApps = value ?? false;
-                            ConfigUtils.save();
-                            ManagerService.updateActionCounters();
-                            widget.refreshUI?.call();
-                          },
+                      _buildExpandableSection(
+                        title: Localization.translate('options'),
+                        expanded: _optionsExpanded,
+                        onTap: () => _toggleSection('options'),
+                        child: Column(
+                          children: [
+                            OptionItem(
+                              title: Localization.translate('never_uninstall'),
+                              tooltip: Localization.translate('never_uninstall_tooltip'),
+                              value: ConfigUtils.neverUninstallApps,
+                              onChanged: (value) {
+                                setState(() {});
+                                ConfigUtils.neverUninstallApps = value ?? false;
+                                ConfigUtils.save();
+                                ManagerService.updateActionCounters();
+                                widget.refreshUI?.call();
+                              },
+                            ),
+                            OptionItem(
+                              title: Localization.translate('export_all_apps'),
+                              tooltip: Localization.translate('export_all_apps_tooltip'),
+                              value: ConfigUtils.exportAllApps,
+                              onChanged: (value) {
+                                setState(() {});
+                                ConfigUtils.exportAllApps = value ?? false;
+                                ConfigUtils.save();
+                              },
+                            ),
+                            OptionItem(
+                              title: Localization.translate('refresh_icons'),
+                              tooltip: Localization.translate('refresh_icons_tooltip'),
+                              value: ConfigUtils.refreshIcons,
+                              onChanged: (value) {
+                                setState(() {});
+                                ConfigUtils.refreshIcons = value ?? false;
+                                ConfigUtils.save();
+                              },
+                            ),
+                          ],
                         ),
+                        animation: _optionsAnimation,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 24.0),
-                        child: OptionItem(
-                          title: 'Export all apps list',
-                          tooltip: 'Export all apps, even if there are no changes',
-                          value: ConfigUtils.exportAllApps,
-                          onChanged: (value) {
-                            setState(() {});
-                            ConfigUtils.exportAllApps = value ?? false;
-                            ConfigUtils.save();
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 24.0),
-                        child: OptionItem(
-                          title: 'Refresh all icons',
-                          tooltip: 'Always clear the icon cache to refresh all app icons',
-                          value: ConfigUtils.refreshIcons,
-                          onChanged: (value) {
-                            setState(() {});
-                            ConfigUtils.refreshIcons = value ?? false;
-                            ConfigUtils.save();
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: () {
-                setState(() {
-                  _actionsExpanded = !_actionsExpanded;
-                  if (_actionsExpanded) {
-                    _expandAnimationController.forward(from: 0.0);
-                  } else {
-                    _expandAnimationController.reverse(from: 1.0);
-                  }
-                  _handleScroll();
-                });
-              },
-              child: SizedBox(
-                width: double.infinity,
-                child: Container(
-                  color: Colors.transparent,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'ACTIONS',
-                          style: TextStyle(color: Colors.white70, fontWeight: FontWeight.bold, fontSize: 14),
-                        ),
-                        Icon(
-                          _actionsExpanded ? Icons.expand_less : Icons.expand_more,
-                          color: Colors.white70,
-                          size: 20,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            ClipRect(
-              child: AnimatedSize(
-                duration: const Duration(milliseconds: 800),
-                curve: Curves.easeInOut,
-                child: SizedBox(
-                  height: _actionsExpanded ? expandedActionsMaxHeight : 0.0,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        color: Colors.transparent,
-                        padding: const EdgeInsets.only(left: 24.0),
+                      SizedBox(height: padding),
+                      _buildExpandableSection(
+                        title: Localization.translate('actions'),
+                        expanded: _actionsExpanded,
+                        onTap: () => _toggleSection('actions'),
                         child: Tooltip(
-                          message: 'Select the path where the ADB executable is located',
+                          message: Localization.translate('select_adb_tooltip'),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.grey[800],
                               foregroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                             ),
                             onPressed: () => FileManager.selectAdbFolder(context),
-                            child: Text('Select ADB'),
+                            child: Text(Localization.translate('select_adb'), style: const TextStyle(fontSize: 14)),
+                          ),
+                        ),
+                        animation: _actionsAnimation,
+                      ),
+                      SizedBox(height: padding),
+                      _buildExpandableSection(
+                        title: Localization.translate('language'),
+                        expanded: _languageExpanded,
+                        onTap: () => _toggleSection('language'),
+                        child: LanguageSelectorWidget(
+                          onLanguageSelected: _selectLanguage,
+                          onLanguageChanged: widget.refreshUI,
+                          titleStyle: const TextStyle(color: Colors.white, fontSize: 14),
+                          hintStyle: const TextStyle(color: Colors.white70, fontSize: 14),
+                          searchFieldFillColor: Colors.white.withOpacity(0.1),
+                          iconColor: Colors.white70,
+                          borderRadius: BorderRadius.circular(12),
+                          listHeight: 150,
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                        ),
+                        animation: _languageAnimation,
+                      ),
+                      SizedBox(height: padding),
+                      Card(
+                        elevation: 2.0,
+                        color: Colors.grey[850],
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(padding),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(Localization.translate('tcp_ip'), style: const TextStyle(color: Colors.white70, fontWeight: FontWeight.bold, fontSize: 14)),
+                              SizedBox(height: 8),
+                              TextField(
+                                controller: _ipController,
+                                decoration: InputDecoration(
+                                  labelText: Localization.translate('device_ip'),
+                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                                  filled: true,
+                                  fillColor: Colors.white.withOpacity(0.1),
+                                  hintText: Localization.translate('ip_hint'),
+                                ),
+                                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                              SizedBox(height: 8),
+                              TextField(
+                                controller: _portController,
+                                decoration: InputDecoration(
+                                  labelText: Localization.translate('port'),
+                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                                  filled: true,
+                                  fillColor: Colors.white.withOpacity(0.1),
+                                  hintText: Localization.translate('port_hint'),
+                                ),
+                                keyboardType: TextInputType.number,
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                              SizedBox(height: 12),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ElevatedButton.icon(
+                                    icon: _connecting
+                                        ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                                        : const Icon(Icons.wifi, size: 16),
+                                    label: Text(Localization.translate('connect'), style: const TextStyle(fontSize: 14)),
+                                    onPressed: _connecting ? null : _connect,
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.blueAccent,
+                                      foregroundColor: Colors.white,
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                                    ),
+                                  ),
+                                  SizedBox(width: 16),
+                                  ElevatedButton.icon(
+                                    icon: _disconnecting
+                                        ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.red))
+                                        : const Icon(Icons.link_off, color: Colors.red, size: 16),
+                                    label: Text(Localization.translate('disconnect'), style: const TextStyle(fontSize: 14, color: Colors.red)),
+                                    onPressed: _disconnecting ? null : _disconnect,
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.grey[800],
+                                      foregroundColor: Colors.red,
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -318,67 +417,36 @@ class _ConfigOverlayState extends State<ConfigOverlay> with TickerProviderStateM
                   ),
                 ),
               ),
-            ),
-            SizedBox(height: 12),
-            Text('TCP/IP', style: TextStyle(color: Colors.white70, fontWeight: FontWeight.bold, fontSize: 14)),
-            SizedBox(height: 8),
-            TextField(
-              controller: _ipController,
-              decoration: InputDecoration(
-                labelText: 'Device IP',
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                hintText: 'e.g. 192.168.1.100',
-              ),
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
-            ),
-            SizedBox(height: 8),
-            TextField(
-              controller: _portController,
-              decoration: InputDecoration(
-                labelText: 'Port',
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                hintText: 'e.g. 5555',
-              ),
-              keyboardType: TextInputType.number,
-            ),
-            SizedBox(height: 12),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton.icon(
-                  icon: _connecting
-                      ? SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
-                      : Icon(Icons.wifi),
-                  label: Text('Connect'),
-                  onPressed: _connecting ? null : _connect,
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                  ),
+              actions: [
+                ValueListenableBuilder<bool>(
+                  valueListenable: _showScrollHint,
+                  builder: (context, show, child) {
+                    return AnimatedOpacity(
+                      opacity: show ? 1.0 : 0.0,
+                      duration: const Duration(milliseconds: 300),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(Icons.keyboard_arrow_down, color: Colors.white70, size: 20),
+                          const SizedBox(width: 4),
+                          Text(Localization.translate('swipe_down'), style: const TextStyle(color: Colors.white70, fontSize: 12, fontWeight: FontWeight.w300)),
+                        ],
+                      ),
+                    );
+                  },
                 ),
-                SizedBox(width: 16),
-                ElevatedButton.icon(
-                  icon: _disconnecting
-                      ? SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.red))
-                      : Icon(Icons.link_off, color: Colors.red),
-                  label: Text('Disconnect', style: TextStyle(color: Colors.red)),
-                  onPressed: _disconnecting ? null : _disconnect,
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.red,
-                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                FadeIn(
+                  duration: const Duration(milliseconds: 300),
+                  child: TextButton(
+                    child: Text(Localization.translate('close'), style: const TextStyle(color: Colors.white, fontSize: 14)),
+                    onPressed: () => Navigator.of(context).pop(),
                   ),
                 ),
               ],
             ),
-          ],
-        ),
-      ),
-      actions: [
-        ScrollHintWidget(showHint: _showScrollHint),
-        TextButton(
-          child: Text('Close', style: TextStyle(color: Colors.white)),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-      ],
+          ),
+        );
+      },
     );
   }
 }
@@ -389,105 +457,24 @@ class OptionItem extends StatelessWidget {
   final bool value;
   final ValueChanged<bool?> onChanged;
 
-  const OptionItem({
-    required this.title,
-    required this.tooltip,
-    required this.value,
-    required this.onChanged,
-    super.key,
-  });
+  const OptionItem({required this.title, required this.tooltip, required this.value, required this.onChanged, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Tooltip(
       message: tooltip,
       child: CheckboxListTile(
-        title: Text(
-          title,
-          style: TextStyle(color: Colors.white, fontSize: 14),
-        ),
+        title: Text(title, style: const TextStyle(color: Colors.white, fontSize: 14)),
         value: value,
         onChanged: onChanged,
-        tileColor: null,
-        contentPadding: EdgeInsets.zero,
+        tileColor: Colors.transparent,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 8),
         controlAffinity: ListTileControlAffinity.leading,
-        checkboxShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        visualDensity: VisualDensity(horizontal: -2, vertical: -4),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+        checkboxShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+        activeColor: Colors.blueAccent,
+        checkColor: Colors.white,
+        visualDensity: const VisualDensity(horizontal: -2, vertical: -4),
       ),
-    );
-  }
-}
-
-class ScrollHintWidget extends StatefulWidget {
-  final ValueNotifier<bool> showHint;
-
-  const ScrollHintWidget({required this.showHint, super.key});
-
-  @override
-  State<ScrollHintWidget> createState() => _ScrollHintWidgetState();
-}
-
-class _ScrollHintWidgetState extends State<ScrollHintWidget> with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _rotationAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1000),
-    )..repeat(reverse: true);
-    _rotationAnimation = Tween<double>(begin: 0.0, end: 0.05).animate(_controller);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ValueListenableBuilder<bool>(
-      valueListenable: widget.showHint,
-      builder: (context, show, child) {
-        return AnimatedOpacity(
-          opacity: show ? 1.0 : 0.0,
-          duration: const Duration(milliseconds: 300),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              RotationTransition(
-                turns: _rotationAnimation,
-                child: Icon(
-                  Icons.keyboard_arrow_down,
-                  color: Colors.white70,
-                  size: 20,
-                ),
-              ),
-              const SizedBox(width: 4),
-              AnimatedBuilder(
-                animation: _rotationAnimation,
-                builder: (context, child) {
-                  return Opacity(
-                    opacity: 0.7,
-                    child: Text(
-                      'Swipe down',
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 }

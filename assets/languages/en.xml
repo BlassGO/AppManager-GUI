@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<translations>
+  <!-- Setup -->
+  <translation key="welcome">Welcome!</translation>
+  <translation key="welcome_message">Effortlessly remove unwanted apps and share your custom debloat lists</translation>
+  <translation key="search_languages_hint">Find your language...</translation>
+  <translation key="no_languages_found">No matches</translation>
+  <translation key="error_loading_languages">Languages could not be loaded</translation>
+  <translation key="continue_button">Continue</translation>
+
+  <!-- UI Button Labels -->
+  <translation key="check_all">Check all</translation>
+  <translation key="uncheck_all">Uncheck all</translation>
+  <translation key="restore_all">Restore all</translation>
+  <translation key="apply_button" maxLength="10">APPLY</translation>
+  <translation key="skip">SKIP</translation>
+  <translation key="support">Support</translation>
+  <translation key="reload" maxLength="10">Reload</translation>
+  <translation key="device" maxLength="10">Device</translation>
+  <translation key="log" maxLength="10">Log</translation>
+  <translation key="browse" maxLength="10">Browse</translation>
+  <translation key="settings" maxLength="10">Settings</translation>
+  <translation key="import" maxLength="10">Import</translation>
+  <translation key="export" maxLength="10">Export</translation>
+  <translation key="connect">Connect</translation>
+  <translation key="disconnect">Disconnect</translation>
+  <translation key="select_adb">Select ADB</translation>
+  <translation key="close">Close</translation>
+  <translation key="ok">OK</translation>
+  <translation key="select">Select</translation>
+  <translation key="cancel">Cancel</translation>
+  <translation key="copy">Copy</translation>
+  <translation key="select_adb_folder">Select ADB folder</translation>
+
+  <!-- Tooltips and Hints -->
+  <translation key="apply_button_tip" maxLength="80">Apply changes to the device</translation>
+  <translation key="checkbox_tip" maxLength="80">Uncheck to uninstall and recheck to reactivate or reinstall</translation>
+  <translation key="support_tooltip">Support the developer ☕</translation>
+  <translation key="view_source">View source code</translation>
+  <translation key="reload_tooltip">Reload app list</translation>
+  <translation key="device_tooltip">Select a device</translation>
+  <translation key="log_tooltip">View last log</translation>
+  <translation key="browse_tooltip">Import community data</translation>
+  <translation key="settings_tooltip">Settings</translation>
+  <translation key="icon_view_tooltip">Toggle icon view</translation>
+  <translation key="import_tooltip">Import actions</translation>
+  <translation key="export_tooltip">Export current actions</translation>
+  <translation key="select_adb_tooltip">Select the path where the ADB executable is located</translation>
+  <translation key="never_uninstall_tooltip">Only deactivate apps and clear their data</translation>
+  <translation key="export_all_apps_tooltip">Export all apps, even if there are no changes</translation>
+  <translation key="refresh_icons_tooltip">Always clear the icon cache to refresh all app icons</translation>
+  <translation key="open_in_browser">Open in Browser</translation>
+  <translation key="search_repos_hint">Search repositories...</translation>
+  <translation key="search_repos_tooltip">Search repositories</translation>
+  <translation key="reload_repos_tooltip">Reload repositories</translation>
+  <translation key="open_github_tooltip">Open GitHub</translation>
+  <translation key="import_repo_apps_tooltip">Import repository apps</translation>
+
+  <!-- Error and Warning Messages -->
+  <translation key="copied_to_clipboard">Copied to clipboard!</translation>
+  <translation key="connect_error_empty">Please enter both IP and port.</translation>
+  <translation key="connect_error_network">Could not connect to</translation>
+  <translation key="connect_error_network_check">Make sure the device is on the same network</translation>
+  <translation key="disconnect_error">Could not disconnect. See log for details.</translation>
+  <translation key="device_offline_message">Device is offline.&#10;&#10;Please turn on the device screen and unlock it.</translation>
+  <translation key="failed_open_url">Failed to open URL in browser.</translation>
+  <translation key="adb_not_installed">ADB is not installed</translation>
+  <translation key="adb_path_instruction">If ADB is already installed, ensure it is added to your system PATH or select the folder containing the ADB executable.</translation>
+  <translation key="adb_install_instruction">Not installed? Get it this way:</translation>
+  <translation key="log_copied">Log copied!</translation>
+  <translation key="execution_log">Execution Log</translation>
+  <translation key="error_fetching_repos">Error fetching repositories:</translation>
+  <translation key="error_searching_repos">Error searching repositories:</translation>
+  <translation key="error_importing_repo">Error importing repository:</translation>
+  <translation key="no_devices_found">No devices found. Please connect a device.</translation>
+  <translation key="device_unauthorized">Device is unauthorized. Please allow USB debugging on the device.</translation>
+  <translation key="failed_transfer_app_manager">Failed to transfer app_manager to device.&#10;&#10;See log for details.</translation>
+  <translation key="error_preparing_app_manager">Error preparing app_manager:</translation>
+  <translation key="failed_extract_icons">Failed to extract icons.&#10;&#10;See log for details.</translation>
+  <translation key="failed_pull_icons">Failed to pull icons.zip.&#10;&#10;See log for details.</translation>
+  <translation key="failed_extract_zip_icons">Failed to extract icons from zip.&#10;&#10;See log for details.</translation>
+  <translation key="failed_load_app_list">Failed to load app list.&#10;&#10;See log for details.</translation>
+  <translation key="no_valid_adb_executable">No valid ADB executable found in selected folder.</translation>
+  <translation key="no_actions_to_export">No actions to export.</translation>
+  <translation key="invalid_json">Invalid JSON.</translation>
+  <translation key="icon_file_not_found">Icon file not found.</translation>
+  <translation key="could_not_open_url">Could not open the URL.&#10;&#10;Use this link:</translation>
+
+  <!-- Messages -->
+  <translation key="device_selected">Device selected:</translation>
+  <translation key="finding_devices">Finding devices...</translation>
+  <translation key="no_apps_loaded">No apps loaded.</translation>
+  <translation key="no_changes_to_apply">No changes to apply.</translation>
+  <translation key="commands_executed_successfully">Commands executed successfully!</translation>
+  <translation key="extracting_icons">Extracting icons...</translation>
+  <translation key="pulling_icons">Pulling icons...</translation>
+  <translation key="applying_changes">Applying changes...</translation>
+  <translation key="adb_path_set">ADB path set to</translation>
+  <translation key="exported_to">Exported to</translation>
+  <translation key="applied_actions">Applied</translation>
+  <translation key="actions_suffix">actions.</translation>
+  <translation key="icon_exported_to">Icon exported to</translation>
+
+  <!-- Filter and Status Labels -->
+  <translation key="no_matches">No matches</translation>
+  <translation key="icon_view">Icon View</translation>
+  <translation key="activate" maxLength="15">Activate</translation>
+  <translation key="install" maxLength="15">Install</translation>
+  <translation key="uninstall" maxLength="15">Uninstall</translation>
+  <translation key="deactivate" maxLength="15">Deactivate</translation>
+  <translation key="total" maxLength="15">Total</translation>
+  <translation key="action" maxLength="15">Action</translation>
+  <translation key="count" maxLength="15">Count</translation>
+  <translation key="all_apps">All Apps</translation>
+  <translation key="enabled">Enabled</translation>
+  <translation key="disabled">Disabled</translation>
+  <translation key="uninstalled">Uninstalled</translation>
+  <translation key="system_user">System & User</translation>
+  <translation key="system">System</translation>
+  <translation key="user">User</translation>
+  <translation key="any">Any</translation>
+  <translation key="checked">Checked</translation>
+  <translation key="unchecked">Unchecked</translation>
+  <translation key="applicable">Applicable</translation>
+
+  <!-- App Information Labels -->
+  <translation key="name" maxLength="15">Name</translation>
+  <translation key="id" maxLength="15">ID</translation>
+  <translation key="package" maxLength="15">Package</translation>
+  <translation key="type" maxLength="15">Type</translation>
+  <translation key="path" maxLength="15">Path</translation>
+  <translation key="hide">Hide</translation>
+  <translation key="info">Info</translation>
+  <translation key="export_icon">Export icon</translation>
+  <translation key="unknown_repo_name">Unknown Name</translation>
+  <translation key="unknown_owner">Unknown</translation>
+  <translation key="no_description">No description</translation>
+  <translation key="device_fallback">Device</translation>
+
+  <!-- Input Field Hints -->
+  <translation key="search_hint">Search apps or packages...</translation>
+  <translation key="state_label">State</translation>
+  <translation key="system_label">System</translation>
+  <translation key="check_label">Check</translation>
+  <translation key="device_ip">Device IP</translation>
+  <translation key="ip_hint">e.g. 192.168.1.100</translation>
+  <translation key="port">Port</translation>
+  <translation key="port_hint">e.g. 5555</translation>
+  <translation key="tcp_ip">TCP/IP</translation>
+  <translation key="swipe_down">Swipe down</translation>
+
+  <!-- Configuration Options -->
+  <translation key="options">Options</translation>
+  <translation key="actions">Actions</translation>
+  <translation key="never_uninstall">Never uninstall, only deactivate</translation>
+  <translation key="export_all_apps">Export all apps list</translation>
+  <translation key="refresh_icons">Refresh all icons</translation>
+  <translation key="language">Language</translation>
+
+  <!-- Device Selector -->
+  <translation key="select_device">Select Device</translation>
+  <translation key="connection">Connection</translation>
+  <translation key="serial">Serial</translation>
+
+  <!-- File Picker Dialogs -->
+  <translation key="select_directory">Select directory</translation>
+  <translation key="export_actions_json">Export actions as JSON</translation>
+  <translation key="import_actions_json">Import actions JSON</translation>
+  <translation key="export_app_icon">Export app icon</translation>
+</translations>

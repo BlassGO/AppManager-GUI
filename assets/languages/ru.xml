@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<translations>
+  <!-- Setup -->
+  <translation key="welcome">Добро пожаловать!</translation>
+  <translation key="welcome_message">Легко удаляйте ненужные приложения и делитесь списками оптимизации</translation>
+  <translation key="search_languages_hint">Найти язык...</translation>
+  <translation key="no_languages_found">Нет совпадений</translation>
+  <translation key="error_loading_languages">Не удалось загрузить языки</translation>
+  <translation key="continue_button">Продолжить</translation>
+
+  <!-- UI Button Labels -->
+  <translation key="check_all">Выбрать все</translation>
+  <translation key="uncheck_all">Снять все</translation>
+  <translation key="restore_all">Восстановить все</translation>
+  <translation key="apply_button" maxLength="10">ПРИМЕНИТЬ</translation>
+  <translation key="skip">ПРОПУСТИТЬ</translation>
+  <translation key="support">Поддержка</translation>
+  <translation key="reload" maxLength="10">Обновить</translation>
+  <translation key="device" maxLength="10">Устройство</translation>
+  <translation key="log" maxLength="10">Журнал</translation>
+  <translation key="browse" maxLength="10">Обзор</translation>
+  <translation key="settings" maxLength="10">Настройки</translation>
+  <translation key="import" maxLength="10">Импорт</translation>
+  <translation key="export" maxLength="10">Экспорт</translation>
+  <translation key="connect">Подключить</translation>
+  <translation key="disconnect">Отключить</translation>
+  <translation key="select_adb">Выбрать ADB</translation>
+  <translation key="close">Закрыть</translation>
+  <translation key="ok">ОК</translation>
+  <translation key="select">Выбрать</translation>
+  <translation key="cancel">Отмена</translation>
+  <translation key="copy">Копировать</translation>
+  <translation key="select_adb_folder">Выбрать папку ADB</translation>
+
+  <!-- Tooltips and Hints -->
+  <translation key="apply_button_tip" maxLength="80">Применить изменения к устройству</translation>
+  <translation key="checkbox_tip" maxLength="80">Снимите галочку для удаления, установите для повторной активации</translation>
+  <translation key="support_tooltip">Поддержите разработчика ☕</translation>
+  <translation key="view_source">Просмотреть исходный код</translation>
+  <translation key="reload_tooltip">Обновить список приложений</translation>
+  <translation key="device_tooltip">Выбрать устройство</translation>
+  <translation key="log_tooltip">Просмотреть последний журнал</translation>
+  <translation key="browse_tooltip">Импортировать данные сообщества</translation>
+  <translation key="settings_tooltip">Настройки</translation>
+  <translation key="icon_view_tooltip">Переключить вид иконок</translation>
+  <translation key="import_tooltip">Импортировать действия</translation>
+  <translation key="export_tooltip">Экспортировать текущие действия</translation>
+  <translation key="select_adb_tooltip">Выберите путь к исполняемому файлу ADB</translation>
+  <translation key="never_uninstall_tooltip">Только деактивировать приложения и очистить данные</translation>
+  <translation key="export_all_apps_tooltip">Экспортировать все приложения, даже без изменений</translation>
+  <translation key="refresh_icons_tooltip">Всегда очищать кеш иконок для обновления</translation>
+  <translation key="open_in_browser">Открыть в браузере</translation>
+  <translation key="search_repos_hint">Поиск репозиториев...</translation>
+  <translation key="search_repos_tooltip">Поиск репозиториев</translation>
+  <translation key="reload_repos_tooltip">Обновить репозитории</translation>
+  <translation key="open_github_tooltip">Открыть GitHub</translation>
+  <translation key="import_repo_apps_tooltip">Импортировать приложения репозитория</translation>
+
+  <!-- Error and Warning Messages -->
+  <translation key="copied_to_clipboard">Скопировано в буфер обмена!</translation>
+  <translation key="connect_error_empty">Введите IP и порт.</translation>
+  <translation key="connect_error_network">Не удалось подключиться к</translation>
+  <translation key="connect_error_network_check">Убедитесь, что устройство в той же сети</translation>
+  <translation key="disconnect_error">Не удалось отключиться. См. журнал.</translation>
+  <translation key="device_offline_message">Устройство оффлайн.&#10;&#10;Включите экран и разблокируйте.</translation>
+  <translation key="failed_open_url">Не удалось открыть URL в браузере.</translation>
+  <translation key="adb_not_installed">ADB не установлен</translation>
+  <translation key="adb_path_instruction">Если ADB установлен, добавьте его в PATH или выберите папку с исполняемым файлом.</translation>
+  <translation key="adb_install_instruction">Не установлен? Получите так:</translation>
+  <translation key="log_copied">Журнал скопирован!</translation>
+  <translation key="execution_log">Журнал выполнения</translation>
+  <translation key="error_fetching_repos">Ошибка получения репозиториев:</translation>
+  <translation key="error_searching_repos">Ошибка поиска репозиториев:</translation>
+  <translation key="error_importing_repo">Ошибка импорта репозитория:</translation>
+  <translation key="no_devices_found">Устройства не найдены. Подключите устройство.</translation>
+  <translation key="device_unauthorized">Устройство не авторизовано. Включите отладку по USB.</translation>
+  <translation key="failed_transfer_app_manager">Не удалось передать app_manager на устройство.&#10;&#10;См. журнал.</translation>
+  <translation key="error_preparing_app_manager">Ошибка подготовки app_manager:</translation>
+  <translation key="failed_extract_icons">Не удалось извлечь иконки.&#10;&#10;См. журнал.</translation>
+  <translation key="failed_pull_icons">Не удалось получить icons.zip.&#10;&#10;См. журнал.</translation>
+  <translation key="failed_extract_zip_icons">Не удалось извлечь иконки из zip.&#10;&#10;См. журнал.</translation>
+  <translation key="failed_load_app_list">Не удалось загрузить список приложений.&#10;&#10;См. журнал.</translation>
+  <translation key="no_valid_adb_executable">В папке не найден действительный исполняемый файл ADB.</translation>
+  <translation key="no_actions_to_export">Нет действий для экспорта.</translation>
+  <translation key="invalid_json">Недействительный JSON.</translation>
+  <translation key="icon_file_not_found">Файл иконки не найден.</translation>
+  <translation key="could_not_open_url">Не удалось открыть URL.&#10;&#10;Используйте эту ссылку:</translation>
+
+  <!-- Messages -->
+  <translation key="device_selected">Выбрано устройство:</translation>
+  <translation key="finding_devices">Поиск устройств...</translation>
+  <translation key="no_apps_loaded">Приложения не загружены.</translation>
+  <translation key="no_changes_to_apply">Нет изменений для применения.</translation>
+  <translation key="commands_executed_successfully">Команды успешно выполнены!</translation>
+  <translation key="extracting_icons">Извлечение иконок...</translation>
+  <translation key="pulling_icons">Получение иконок...</translation>
+  <translation key="applying_changes">Применение изменений...</translation>
+  <translation key="adb_path_set">Путь ADB установлен в</translation>
+  <translation key="exported_to">Экспортировано в</translation>
+  <translation key="applied_actions">Применено</translation>
+  <translation key="actions_suffix">действий.</translation>
+  <translation key="icon_exported_to">Иконка экспортирована в</translation>
+
+  <!-- Filter and Status Labels -->
+  <translation key="no_matches">Нет совпадений</translation>
+  <translation key="icon_view">Вид иконок</translation>
+  <translation key="activate" maxLength="15">Активировать</translation>
+  <translation key="install" maxLength="15">Установить</translation>
+  <translation key="uninstall" maxLength="15">Удалить</translation>
+  <translation key="deactivate" maxLength="15">Деактивировать</translation>
+  <translation key="total" maxLength="15">Итого</translation>
+  <translation key="action" maxLength="15">Действие</translation>
+  <translation key="count" maxLength="15">Количество</translation>
+  <translation key="all_apps">Все приложения</translation>
+  <translation key="enabled">Включено</translation>
+  <translation key="disabled">Отключено</translation>
+  <translation key="uninstalled">Удалено</translation>
+  <translation key="system_user">Система и пользователь</translation>
+  <translation key="system">Система</translation>
+  <translation key="user">Пользователь</translation>
+  <translation key="any">Любой</translation>
+  <translation key="checked">Выбрано</translation>
+  <translation key="unchecked">Не выбрано</translation>
+  <translation key="applicable">Применимо</translation>
+
+  <!-- App Information Labels -->
+  <translation key="name" maxLength="15">Имя</translation>
+  <translation key="id" maxLength="15">ID</translation>
+  <translation key="package" maxLength="15">Пакет</translation>
+  <translation key="type" maxLength="15">Тип</translation>
+  <translation key="path" maxLength="15">Путь</translation>
+  <translation key="hide">Скрыть</translation>
+  <translation key="info">Инфо</translation>
+  <translation key="export_icon">Экспорт иконки</translation>
+  <translation key="unknown_repo_name">Неизвестное имя</translation>
+  <translation key="unknown_owner">Неизвестно</translation>
+  <translation key="no_description">Без описания</translation>
+  <translation key="device_fallback">Устройство</translation>
+
+  <!-- Input Field Hints -->
+  <translation key="search_hint">Поиск приложений или пакетов...</translation>
+  <translation key="state_label">Состояние</translation>
+  <translation key="system_label">Система</translation>
+  <translation key="check_label">Выбор</translation>
+  <translation key="device_ip">IP устройства</translation>
+  <translation key="ip_hint">напр. 192.168.1.100</translation>
+  <translation key="port">Порт</translation>
+  <translation key="port_hint">напр. 5555</translation>
+  <translation key="tcp_ip">TCP/IP</translation>
+  <translation key="swipe_down">Провести вниз</translation>
+
+  <!-- Configuration Options -->
+  <translation key="options">Опции</translation>
+  <translation key="actions">Действия</translation>
+  <translation key="never_uninstall">Только деактивация, без удаления</translation>
+  <translation key="export_all_apps">Экспорт всех приложений</translation>
+  <translation key="refresh_icons">Обновить все иконки</translation>
+  <translation key="language">Язык</translation>
+
+  <!-- Device Selector -->
+  <translation key="select_device">Выбрать устройство</translation>
+  <translation key="connection">Подключение</translation>
+  <translation key="serial">Серийный номер</translation>
+
+  <!-- File Picker Dialogs -->
+  <translation key="select_directory">Выбрать папку</translation>
+  <translation key="export_actions_json">Экспорт действий в JSON</translation>
+  <translation key="import_actions_json">Импорт JSON действий</translation>
+  <translation key="export_app_icon">Экспорт иконки приложения</translation>
+</translations>

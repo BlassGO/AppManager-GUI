@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<translations>
+  <!-- Setup -->
+  <translation key="welcome">欢迎！</translation>
+  <translation key="welcome_message">轻松删除不需要的应用程序并分享自定义优化列表</translation>
+  <translation key="search_languages_hint">查找您的语言...</translation>
+  <translation key="no_languages_found">无匹配项</translation>
+  <translation key="error_loading_languages">无法加载语言</translation>
+  <translation key="continue_button">继续</translation>
+
+  <!-- UI Button Labels -->
+  <translation key="check_all">全选</translation>
+  <translation key="uncheck_all">取消全选</translation>
+  <translation key="restore_all">全部恢复</translation>
+  <translation key="apply_button" maxLength="10">应用</translation>
+  <translation key="skip">跳过</translation>
+  <translation key="support">支持</translation>
+  <translation key="reload" maxLength="10">重新加载</translation>
+  <translation key="device" maxLength="10">设备</translation>
+  <translation key="log" maxLength="10">日志</translation>
+  <translation key="browse" maxLength="10">浏览</translation>
+  <translation key="settings" maxLength="10">设置</translation>
+  <translation key="import" maxLength="10">导入</translation>
+  <translation key="export" maxLength="10">导出</translation>
+  <translation key="connect">连接</translation>
+  <translation key="disconnect">断开</translation>
+  <translation key="select_adb">选择ADB</translation>
+  <translation key="close">关闭</translation>
+  <translation key="ok">确定</translation>
+  <translation key="select">选择</translation>
+  <translation key="cancel">取消</translation>
+  <translation key="copy">复制</translation>
+  <translation key="select_adb_folder">选择ADB文件夹</translation>
+
+  <!-- Tooltips and Hints -->
+  <translation key="apply_button_tip" maxLength="80">将更改应用于设备</translation>
+  <translation key="checkbox_tip" maxLength="80">取消勾选以卸载，重新勾选以重新激活或重新安装</translation>
+  <translation key="support_tooltip">支持开发者 ☕</translation>
+  <translation key="view_source">查看源代码</translation>
+  <translation key="reload_tooltip">重新加载应用列表</translation>
+  <translation key="device_tooltip">选择设备</translation>
+  <translation key="log_tooltip">查看最新日志</translation>
+  <translation key="browse_tooltip">导入社区数据</translation>
+  <translation key="settings_tooltip">设置</translation>
+  <translation key="icon_view_tooltip">切换图标视图</translation>
+  <translation key="import_tooltip">导入操作</translation>
+  <translation key="export_tooltip">导出当前操作</translation>
+  <translation key="select_adb_tooltip">选择ADB可执行文件所在路径</translation>
+  <translation key="never_uninstall_tooltip">仅禁用应用并清除其数据</translation>
+  <translation key="export_all_apps_tooltip">导出所有应用，即使没有更改</translation>
+  <translation key="refresh_icons_tooltip">始终清除图标缓存以更新</translation>
+  <translation key="open_in_browser">在浏览器中打开</translation>
+  <translation key="search_repos_hint">搜索仓库...</translation>
+  <translation key="search_repos_tooltip">搜索仓库</translation>
+  <translation key="reload_repos_tooltip">重新加载仓库</translation>
+  <translation key="open_github_tooltip">打开GitHub</translation>
+  <translation key="import_repo_apps_tooltip">导入仓库应用</translation>
+
+  <!-- Error and Warning Messages -->
+  <translation key="copied_to_clipboard">已复制到剪贴板！</translation>
+  <translation key="connect_error_empty">请输入IP和端口。</translation>
+  <translation key="connect_error_network">无法连接到</translation>
+  <translation key="connect_error_network_check">确保设备在同一网络中</translation>
+  <translation key="disconnect_error">无法断开连接。请查看日志详情。</translation>
+  <translation key="device_offline_message">设备离线。&#10;&#10;请打开屏幕并解锁。</translation>
+  <translation key="failed_open_url">无法在浏览器中打开URL。</translation>
+  <translation key="adb_not_installed">ADB未安装</translation>
+  <translation key="adb_path_instruction">如果已安装ADB，请确保其在系统PATH中或选择包含可执行文件的文件夹。</translation>
+  <translation key="adb_install_instruction">未安装？通过以下方式获取：</translation>
+  <translation key="log_copied">日志已复制！</translation>
+  <translation key="execution_log">执行日志</translation>
+  <translation key="error_fetching_repos">获取仓库错误：</translation>
+  <translation key="error_searching_repos">搜索仓库错误：</translation>
+  <translation key="error_importing_repo">导入仓库错误：</translation>
+  <translation key="no_devices_found">未找到设备。请连接设备。</translation>
+  <translation key="device_unauthorized">设备未授权。请启用USB调试。</translation>
+  <translation key="failed_transfer_app_manager">无法将app_manager传输到设备。&#10;&#10;请查看日志详情。</translation>
+  <translation key="error_preparing_app_manager">准备app_manager错误：</translation>
+  <translation key="failed_extract_icons">无法提取图标。&#10;&#10;请查看日志详情。</translation>
+  <translation key="failed_pull_icons">无法获取icons.zip。&#10;&#10;请查看日志详情。</translation>
+  <translation key="failed_extract_zip_icons">无法从zip提取图标。&#10;&#10;请查看日志详情。</translation>
+  <translation key="failed_load_app_list">无法加载应用列表。&#10;&#10;请查看日志详情。</translation>
+  <translation key="no_valid_adb_executable">选定文件夹中未找到有效ADB可执行文件。</translation>
+  <translation key="no_actions_to_export">没有操作可导出。</translation>
+  <translation key="invalid_json">无效的JSON。</translation>
+  <translation key="icon_file_not_found">未找到图标文件。</translation>
+  <translation key="could_not_open_url">无法打开URL。&#10;&#10;请使用此链接：</translation>
+
+  <!-- Messages -->
+  <translation key="device_selected">已选择设备：</translation>
+  <translation key="finding_devices">正在查找设备...</translation>
+  <translation key="no_apps_loaded">未加载应用。</translation>
+  <translation key="no_changes_to_apply">没有更改可应用。</translation>
+  <translation key="commands_executed_successfully">命令执行成功！</translation>
+  <translation key="extracting_icons">正在提取图标...</translation>
+  <translation key="pulling_icons">正在获取图标...</translation>
+  <translation key="applying_changes">正在应用更改...</translation>
+  <translation key="adb_path_set">ADB路径设置为</translation>
+  <translation key="exported_to">已导出到</translation>
+  <translation key="applied_actions">已应用</translation>
+  <translation key="actions_suffix">操作。</translation>
+  <translation key="icon_exported_to">图标已导出到</translation>
+
+  <!-- Filter and Status Labels -->
+  <translation key="no_matches">无匹配项</translation>
+  <translation key="icon_view">图标视图</translation>
+  <translation key="activate" maxLength="15">激活</translation>
+  <translation key="install" maxLength="15">安装</translation>
+  <translation key="uninstall" maxLength="15">卸载</translation>
+  <translation key="deactivate" maxLength="15">禁用</translation>
+  <translation key="total" maxLength="15">总数</translation>
+  <translation key="action" maxLength="15">操作</translation>
+  <translation key="count" maxLength="15">计数</translation>
+  <translation key="all_apps">所有应用</translation>
+  <translation key="enabled">已启用</translation>
+  <translation key="disabled">已禁用</translation>
+  <translation key="uninstalled">已卸载</translation>
+  <translation key="system_user">系统和用户</translation>
+  <translation key="system">系统</translation>
+  <translation key="user">用户</translation>
+  <translation key="any">任意</translation>
+  <translation key="checked">已选中</translation>
+  <translation key="unchecked">未选中</translation>
+  <translation key="applicable">适用</translation>
+
+  <!-- App Information Labels -->
+  <translation key="name" maxLength="15">名称</translation>
+  <translation key="id" maxLength="15">ID</translation>
+  <translation key="package" maxLength="15">包</translation>
+  <translation key="type" maxLength="15">类型</translation>
+  <translation key="path" maxLength="15">路径</translation>
+  <translation key="hide">隐藏</translation>
+  <translation key="info">信息</translation>
+  <translation key="export_icon">导出图标</translation>
+  <translation key="unknown_repo_name">未知名称</translation>
+  <translation key="unknown_owner">未知</translation>
+  <translation key="no_description">无描述</translation>
+  <translation key="device_fallback">设备</translation>
+
+  <!-- Input Field Hints -->
+  <translation key="search_hint">搜索应用或包...</translation>
+  <translation key="state_label">状态</translation>
+  <translation key="system_label">系统</translation>
+  <translation key="check_label">勾选</translation>
+  <translation key="device_ip">设备IP</translation>
+  <translation key="ip_hint">例如 192.168.1.100</translation>
+  <translation key="port">端口</translation>
+  <translation key="port_hint">例如 5555</translation>
+  <translation key="tcp_ip">TCP/IP</translation>
+  <translation key="swipe_down">向下滑动</translation>
+
+  <!-- Configuration Options -->
+  <translation key="options">选项</translation>
+  <translation key="actions">操作</translation>
+  <translation key="never_uninstall">仅禁用应用，不卸载</translation>
+  <translation key="export_all_apps">导出所有应用列表</translation>
+  <translation key="refresh_icons">刷新所有图标</translation>
+  <translation key="language">语言</translation>
+
+  <!-- Device Selector -->
+  <translation key="select_device">选择设备</translation>
+  <translation key="connection">连接</translation>
+  <translation key="serial">序列号</translation>
+
+  <!-- File Picker Dialogs -->
+  <translation key="select_directory">选择目录</translation>
+  <translation key="export_actions_json">将操作导出为JSON</translation>
+  <translation key="import_actions_json">导入JSON操作</translation>
+  <translation key="export_app_icon">导出应用图标</translation>
+</translations>

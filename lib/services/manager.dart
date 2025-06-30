@@ -6,6 +6,7 @@ import 'package:app_manager/services/adb.dart';
 import 'package:app_manager/overlays/alert.dart';
 import 'package:app_manager/overlays/load.dart';
 import 'package:app_manager/utils/config.dart';
+import 'package:app_manager/utils/localization.dart';
 
 class ManagerService {
   static Map<String, Map<String, dynamic>> apps = {};
@@ -53,14 +54,14 @@ class ManagerService {
       if (AdbService.hasError()) {
         Alert.showWarning(
           context,
-          'Failed to transfer app_manager to device.\n\nSee log for details.'
+          Localization.translate('failed_transfer_app_manager')
         );
         return false;
       }
       appManagerPushed = true;
       return true;
     } catch (e) {
-      Alert.showWarning(context, 'Error preparing app_manager: $e');
+      Alert.showWarning(context, '${Localization.translate('error_preparing_app_manager')} $e');
       return false;
     }
   }
@@ -153,7 +154,7 @@ class ManagerService {
 
     iconsLoaded = false;
     final rmFlag = ConfigUtils.refreshIcons ? '-rm' : '';
-    LoadingOverlay.show(context, 'Extracting icons...');
+    LoadingOverlay.show(context, Localization.translate('extracting_icons'));
     await AdbService.runShell(
       'export CLASSPATH=/data/local/tmp/app_manager; app_process / Main $rmFlag -icon /data/local/tmp/icons -zip /data/local/tmp/icons.zip',
       toLowerCase: false,
@@ -162,18 +163,18 @@ class ManagerService {
     LoadingOverlay.hide();
 
     if (AdbService.hasError()) {
-      Alert.showWarning(context, 'Failed to extract icons.\n\nSee log for details.');
+      Alert.showWarning(context, Localization.translate('failed_extract_icons'));
       return false;
     }
 
-    LoadingOverlay.show(context, 'Pulling icons...');
+    LoadingOverlay.show(context, Localization.translate('pulling_icons'));
     final tempDir = Directory.systemTemp;
     final zipFile = File('${tempDir.path}/icons.zip'.replaceAll('\\', '/'));
     await AdbService.pullFile('/data/local/tmp/icons.zip', zipFile.path);
     LoadingOverlay.hide();
 
     if (AdbService.hasError()) {
-      Alert.showWarning(context, 'Failed to pull icons.zip.\n\nSee log for details.');
+      Alert.showWarning(context, Localization.translate('failed_pull_icons'));
       return false;
     }
 
@@ -190,7 +191,7 @@ class ManagerService {
     zipFile.deleteSync();
 
     if (AdbService.hasError()) {
-      Alert.showWarning(context, 'Failed to extract icons from zip.\n\nSee log for details.');
+      Alert.showWarning(context, Localization.translate('failed_extract_zip_icons'));
       return false;
     }
 
@@ -247,7 +248,7 @@ class ManagerService {
     );
 
     if (AdbService.hasError()) {
-      Alert.showWarning(context, 'Failed to load app list.\n\nSee log for details.');
+      Alert.showWarning(context, Localization.translate('failed_load_app_list'));
       return false;
     }
 
@@ -266,10 +267,14 @@ class ManagerService {
       final state = app['state'];
       final checked = app['isChecked'];
       final doBefore = app['doBefore'];
-      if (doBefore == 'install-disable') deactivate++;
-      else if (state > 0 && !checked) {
-        if (isUninstallable) uninstall++;
-        else deactivate++;
+      if (doBefore == 'install-disable') {
+        deactivate++;
+      } else if (state > 0 && !checked) {
+        if (isUninstallable) {
+          uninstall++;
+        } else {
+          deactivate++;
+        }
       } else if (state == 0 && checked) activate++;
       else if (state < 0 && checked) install++;
     });
@@ -282,7 +287,7 @@ class ManagerService {
   static Future<void> applyChanges(BuildContext context) async {
     if (apps.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('No apps loaded.')),
+        SnackBar(content: Text(Localization.translate('no_apps_loaded'))),
       );
       return;
     }
@@ -293,14 +298,14 @@ class ManagerService {
 
     if (actions.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('No changes to apply.')),
+        SnackBar(content: Text(Localization.translate('no_changes_to_apply'))),
       );
       return;
     }
 
     final shellCommand = AdbService.buildShellCommand(actions);
 
-    LoadingOverlay.show(context, 'Applying changes...');
+    LoadingOverlay.show(context, Localization.translate('applying_changes'));
     final output = await AdbService.runShell(shellCommand);
     LoadingOverlay.hide();
 
@@ -308,7 +313,7 @@ class ManagerService {
       Alert.showLog(context, output);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Commands executed successfully!')),
+        SnackBar(content: Text(Localization.translate('commands_executed_successfully'))),
       );
     }
 

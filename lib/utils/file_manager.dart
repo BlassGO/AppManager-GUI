@@ -4,16 +4,17 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:app_manager/services/manager.dart';
 import 'package:app_manager/utils/config.dart';
+import 'package:app_manager/utils/localization.dart';
 
 class FileManager {
   static Future<String?> selectDirectory({String? dialogTitle}) async {
     return await FilePicker.platform.getDirectoryPath(
-      dialogTitle: dialogTitle ?? 'Select directory',
+      dialogTitle: dialogTitle ?? Localization.translate('select_directory'),
     );
   }
 
   static Future<void> selectAdbFolder(BuildContext context) async {
-    final result = await selectDirectory(dialogTitle: 'Select ADB folder');
+    final result = await selectDirectory(dialogTitle: Localization.translate('select_adb_folder'));
     if (result != null) {
       final adbPath = Platform.isWindows ? '$result\\adb.exe' : '$result/adb';
       final file = File(adbPath);
@@ -21,12 +22,12 @@ class FileManager {
         ConfigUtils.adbPath = adbPath;
         await ConfigUtils.save();
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('ADB path set to $adbPath')),
+          SnackBar(content: Text('${Localization.translate('adb_path_set')} $adbPath')),
         );
         Navigator.of(context, rootNavigator: false).pop();
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('No valid ADB executable found in selected folder.')),
+          SnackBar(content: Text(Localization.translate('no_valid_adb_executable'))),
         );
       }
     }
@@ -65,7 +66,7 @@ class FileManager {
 
     if (exportList.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('No actions to export.')),
+        SnackBar(content: Text(Localization.translate('no_actions_to_export'))),
       );
       return;
     }
@@ -77,7 +78,7 @@ class FileManager {
         '${now.year}.json';
 
     final savePath = await FilePicker.platform.saveFile(
-      dialogTitle: 'Export actions as JSON',
+      dialogTitle: Localization.translate('export_actions_json'),
       fileName: fileName,
       type: FileType.custom,
       allowedExtensions: ['json'],
@@ -93,7 +94,7 @@ class FileManager {
     await file.writeAsString(jsonStr);
 
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Exported to $normalizedSavePath')),
+      SnackBar(content: Text('${Localization.translate('exported_to')} $normalizedSavePath')),
     );
   }
 
@@ -104,7 +105,7 @@ class FileManager {
       if (imported.isEmpty) throw Exception('Empty JSON.');
     } catch (_) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Invalid JSON.')),
+        SnackBar(content: Text(Localization.translate('invalid_json'))),
       );
       return;
     }
@@ -113,7 +114,7 @@ class FileManager {
 
   static Future<void> importAppActions(BuildContext context) async {
     final result = await FilePicker.platform.pickFiles(
-      dialogTitle: 'Import actions JSON',
+      dialogTitle: Localization.translate('import_actions_json'),
       type: FileType.custom,
       allowedExtensions: ['json'],
     );
@@ -147,7 +148,7 @@ class FileManager {
     }
     ManagerService.updateActionCounters();
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Applied $applied actions.')),
+      SnackBar(content: Text('${Localization.translate('applied_actions')} $applied ${Localization.translate('actions_suffix')}')),
     );
   }
 
@@ -157,7 +158,7 @@ class FileManager {
         '${now.month.toString().padLeft(2, '0')}-${now.year}.png';
 
     final savePath = await FilePicker.platform.saveFile(
-      dialogTitle: 'Export app icon',
+      dialogTitle: Localization.translate('export_app_icon'),
       fileName: fileName,
       type: FileType.custom,
       allowedExtensions: ['png'],
@@ -172,7 +173,7 @@ class FileManager {
     final srcFile = File(iconPath);
     if (!await srcFile.exists()) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Icon file not found.')),
+        SnackBar(content: Text(Localization.translate('icon_file_not_found'))),
       );
       return;
     }
@@ -180,7 +181,7 @@ class FileManager {
     await srcFile.copy(normalizedSavePath);
 
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Icon exported to $normalizedSavePath')),
+      SnackBar(content: Text('${Localization.translate('icon_exported_to')} $normalizedSavePath')),
     );
   }
 }

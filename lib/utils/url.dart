@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:app_manager/overlays/alert.dart';
+import 'package:app_manager/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UrlUtils {
@@ -20,7 +21,7 @@ class UrlUtils {
     if (!success) {
       Alert.showWarning(
         context,
-        'Could not open the URL.\n\nUse this link:',
+        Localization.translate('could_not_open_url'),
         command: url,
       );
     }

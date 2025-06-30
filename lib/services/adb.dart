@@ -7,6 +7,7 @@ import 'package:app_manager/overlays/adb.dart';
 import 'package:app_manager/overlays/load.dart';
 import 'package:app_manager/overlays/alert.dart';
 import 'package:app_manager/utils/config.dart';
+import 'package:app_manager/utils/localization.dart';
 
 class AdbService {
   static final StringBuffer _logBuffer = StringBuffer();
@@ -151,11 +152,9 @@ class AdbService {
         } else {
           final productMatch = RegExp(r'(device product|device):(\S+)').firstMatch(line);
           if (productMatch != null) {
-            name = productMatch.group(2)!
-
-;
+            name = productMatch.group(2)!;
           } else {
-            name = 'Device $serialN';
+            name = '${Localization.translate('device_fallback')} $serialN';
           }
         }
         final isActive = !(line.contains('offline') || line.contains('unauthorized'));
@@ -250,7 +249,7 @@ class AdbService {
 
   static Future<bool> selectDevice(BuildContext context, {showSelector = false, Future<void> Function()? loadAppsCallback}) async {
     if (!await isAdbAvailable()) {
-      Alert.showWarning(context, 'ADB is not installed.', command: getInstallCommand());
+      Alert.showWarning(context, Localization.translate('adb_not_installed'), command: getInstallCommand());
       return false;
     }
 
@@ -268,7 +267,7 @@ class AdbService {
     if (selectedDevice != null) {
       isNewDevice = (selectedDevice.serial != currentDevice?.serial);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Device selected: ${selectedDevice.name}')),
+        SnackBar(content: Text('${Localization.translate('device_selected')} ${selectedDevice.name}')),
       );
       if (isNewDevice) {
         reset();
@@ -285,16 +284,16 @@ class AdbService {
   static Future<bool> ensureDevice(context) async {
     if (currentDevice == null) {
       if (!await isAdbAvailable()) {
-        Alert.showWarning(context,'ADB is not installed.', command: getInstallCommand());
+        Alert.showWarning(context, Localization.translate('adb_not_installed'), command: getInstallCommand());
         return false;
       }
-      //LoadingOverlay.show(context, 'Finding devices...');
+      //LoadingOverlay.show(context, Localization.translate('finding_devices'));
       if (ConfigUtils.useWireless && ConfigUtils.lastWirelessIp != null && ConfigUtils.lastWirelessPort != null) {
         await connectTcp(ConfigUtils.lastWirelessIp!, ConfigUtils.lastWirelessPort!);
       }
       if (!await selectDevice(context)) {
         //LoadingOverlay.hide();
-        Alert.showWarning(context, 'No devices found. Please connect a device.');
+        Alert.showWarning(context, Localization.translate('no_devices_found'));
         return false;
       }
       //LoadingOverlay.hide();
@@ -311,7 +310,7 @@ class AdbService {
       appendLog(output);
       Alert.showWarning(
         context,
-        'Device is unauthorized. Please allow USB debugging on the device.',
+        Localization.translate('device_unauthorized'),
       );
       currentDevice = null;
       return false;

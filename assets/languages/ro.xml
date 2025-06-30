@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<translations>
+  <!-- Setup -->
+  <translation key="welcome">Bine ați venit!</translation>
+  <translation key="welcome_message">Eliminați cu ușurință aplicațiile nedorite și partajați listele de optimizare</translation>
+  <translation key="search_languages_hint">Căutați limba...</translation>
+  <translation key="no_languages_found">Nicio potrivire</translation>
+  <translation key="error_loading_languages">Limbile nu au putut fi încărcate</translation>
+  <translation key="continue_button">Continuă</translation>
+
+  <!-- UI Button Labels -->
+  <translation key="check_all">Bifează toate</translation>
+  <translation key="uncheck_all">Debifează toate</translation>
+  <translation key="restore_all">Restaurează toate</translation>
+  <translation key="apply_button" maxLength="10">APLICĂ</translation>
+  <translation key="skip">OMITE</translation>
+  <translation key="support">Suport</translation>
+  <translation key="reload" maxLength="10">Reîncarcă</translation>
+  <translation key="device" maxLength="10">Dispozitiv</translation>
+  <translation key="log" maxLength="10">Jurnal</translation>
+  <translation key="browse" maxLength="10">Răsfoiește</translation>
+  <translation key="settings" maxLength="10">Setări</translation>
+  <translation key="import" maxLength="10">Importă</translation>
+  <translation key="export" maxLength="10">Exportă</translation>
+  <translation key="connect">Conectează</translation>
+  <translation key="disconnect">Deconectează</translation>
+  <translation key="select_adb">Selectează ADB</translation>
+  <translation key="close">Închide</translation>
+  <translation key="ok">OK</translation>
+  <translation key="select">Selectează</translation>
+  <translation key="cancel">Anulează</translation>
+  <translation key="copy">Copiază</translation>
+  <translation key="select_adb_folder">Selectează folderul ADB</translation>
+
+  <!-- Tooltips and Hints -->
+  <translation key="apply_button_tip" maxLength="80">Aplică modificările pe dispozitiv</translation>
+  <translation key="checkbox_tip" maxLength="80">Debifează pentru dezinstalare, bifează pentru reactivare sau reinstalare</translation>
+  <translation key="support_tooltip">Susține dezvoltatorul ☕</translation>
+  <translation key="view_source">Vezi codul sursă</translation>
+  <translation key="reload_tooltip">Reîncarcă lista de aplicații</translation>
+  <translation key="device_tooltip">Selectează un dispozitiv</translation>
+  <translation key="log_tooltip">Vezi ultimul jurnal</translation>
+  <translation key="browse_tooltip">Importă date comunitare</translation>
+  <translation key="settings_tooltip">Setări</translation>
+  <translation key="icon_view_tooltip">Comută vizualizarea cu pictograme</translation>
+  <translation key="import_tooltip">Importă acțiuni</translation>
+  <translation key="export_tooltip">Exportă acțiunile curente</translation>
+  <translation key="select_adb_tooltip">Selectează calea către executabilul ADB</translation>
+  <translation key="never_uninstall_tooltip">Doar dezactivează aplicațiile și șterge datele lor</translation>
+  <translation key="export_all_apps_tooltip">Exportă toate aplicațiile, chiar dacă nu sunt modificate</translation>
+  <translation key="refresh_icons_tooltip">Șterge mereu cache-ul pictogramelor pentru actualizare</translation>
+  <translation key="open_in_browser">Deschide în browser</translation>
+  <translation key="search_repos_hint">Caută în depozite...</translation>
+  <translation key="search_repos_tooltip">Caută în depozite</translation>
+  <translation key="reload_repos_tooltip">Reîncarcă depozitele</translation>
+  <translation key="open_github_tooltip">Deschide GitHub</translation>
+  <translation key="import_repo_apps_tooltip">Importă aplicații din depozit</translation>
+
+  <!-- Error and Warning Messages -->
+  <translation key="copied_to_clipboard">Copiat în clipboard!</translation>
+  <translation key="connect_error_empty">Introdu IP-ul și portul.</translation>
+  <translation key="connect_error_network">Nu s-a putut conecta la</translation>
+  <translation key="connect_error_network_check">Asigură-te că dispozitivul este în aceeași rețea</translation>
+  <translation key="disconnect_error">Nu s-a putut deconecta. Vezi jurnalul pentru detalii.</translation>
+  <translation key="device_offline_message">Dispozitivul este offline.&#10;&#10;Pornește ecranul și deblochează-l.</translation>
+  <translation key="failed_open_url">Nu s-a putut deschide URL-ul în browser.</translation>
+  <translation key="adb_not_installed">ADB nu este instalat</translation>
+  <translation key="adb_path_instruction">Dacă ADB este instalat, asigură-te că este în PATH-ul sistemului sau selectează folderul cu executabilul.</translation>
+  <translation key="adb_install_instruction">Nu este instalat? Obține-l astfel:</translation>
+  <translation key="log_copied">Jurnal copiat!</translation>
+  <translation key="execution_log">Jurnal de execuție</translation>
+  <translation key="error_fetching_repos">Eroare la obținerea depozitelor:</translation>
+  <translation key="error_searching_repos">Eroare la căutarea depozitelor:</translation>
+  <translation key="error_importing_repo">Eroare la importarea depozitului:</translation>
+  <translation key="no_devices_found">Niciun dispozitiv găsit. Conectează un dispozitiv.</translation>
+  <translation key="device_unauthorized">Dispozitivul nu este autorizat. Activează depanarea USB.</translation>
+  <translation key="failed_transfer_app_manager">Transferul app_manager pe dispozitiv a eșuat.&#10;&#10;Vezi jurnalul pentru detalii.</translation>
+  <translation key="error_preparing_app_manager">Eroare la pregătirea app_manager:</translation>
+  <translation key="failed_extract_icons">Eșec la extragerea pictogramelor.&#10;&#10;Vezi jurnalul pentru detalii.</translation>
+  <translation key="failed_pull_icons">Eșec la obținerea icons.zip.&#10;&#10;Vezi jurnalul pentru detalii.</translation>
+  <translation key="failed_extract_zip_icons">Eșec la extragerea pictogramelor din zip.&#10;&#10;Vezi jurnalul pentru detalii.</translation>
+  <translation key="failed_load_app_list">Eșec la încărcarea listei de aplicații.&#10;&#10;Vezi jurnalul pentru detalii.</translation>
+  <translation key="no_valid_adb_executable">Niciun executabil ADB valid găsit în folder.</translation>
+  <translation key="no_actions_to_export">Nicio acțiune de exportat.</translation>
+  <translation key="invalid_json">JSON invalid.</translation>
+  <translation key="icon_file_not_found">Fișierul pictogramei nu a fost găsit.</translation>
+  <translation key="could_not_open_url">Nu s-a putut deschide URL-ul.&#10;&#10;Folosește acest link:</translation>
+
+  <!-- Messages -->
+  <translation key="device_selected">Dispozitiv selectat:</translation>
+  <translation key="finding_devices">Căutare dispozitive...</translation>
+  <translation key="no_apps_loaded">Nicio aplicație încărcată.</translation>
+  <translation key="no_changes_to_apply">Nicio modificare de aplicat.</translation>
+  <translation key="commands_executed_successfully">Comenzi executate cu succes!</translation>
+  <translation key="extracting_icons">Se extrag pictogramele...</translation>
+  <translation key="pulling_icons">Se obțin pictogramele...</translation>
+  <translation key="applying_changes">Se aplică modificările...</translation>
+  <translation key="adb_path_set">Calea ADB setată la</translation>
+  <translation key="exported_to">Exportat în</translation>
+  <translation key="applied_actions">Aplicat</translation>
+  <translation key="actions_suffix">acțiuni.</translation>
+  <translation key="icon_exported_to">Pictogramă exportată în</translation>
+
+  <!-- Filter and Status Labels -->
+  <translation key="no_matches">Nicio potrivire</translation>
+  <translation key="icon_view">Vizualizare pictograme</translation>
+  <translation key="activate" maxLength="15">Activează</translation>
+  <translation key="install" maxLength="15">Instalează</translation>
+  <translation key="uninstall" maxLength="15">Dezinstalează</translation>
+  <translation key="deactivate" maxLength="15">Dezactivează</translation>
+  <translation key="total" maxLength="15">Total</translation>
+  <translation key="action" maxLength="15">Acțiune</translation>
+  <translation key="count" maxLength="15">Număr</translation>
+  <translation key="all_apps">Toate aplicațiile</translation>
+  <translation key="enabled">Activat</translation>
+  <translation key="disabled">Dezactivat</translation>
+  <translation key="uninstalled">Dezinstalat</translation>
+  <translation key="system_user">Sistem și utilizator</translation>
+  <translation key="system">Sistem</translation>
+  <translation key="user">Utilizator</translation>
+  <translation key="any">Oricare</translation>
+  <translation key="checked">Bifat</translation>
+  <translation key="unchecked">Debifat</translation>
+  <translation key="applicable">Aplicabil</translation>
+
+  <!-- App Information Labels -->
+  <translation key="name" maxLength="15">Nume</translation>
+  <translation key="id" maxLength="15">ID</translation>
+  <translation key="package" maxLength="15">Pachet</translation>
+  <translation key="type" maxLength="15">Tip</translation>
+  <translation key="path" maxLength="15">Cale</translation>
+  <translation key="hide">Ascunde</translation>
+  <translation key="info">Info</translation>
+  <translation key="export_icon">Exportă pictogramă</translation>
+  <translation key="unknown_repo_name">Nume necunoscut</translation>
+  <translation key="unknown_owner">Necunoscut</translation>
+  <translation key="no_description">Fără descriere</translation>
+  <translation key="device_fallback">Dispozitiv</translation>
+
+  <!-- Input Field Hints -->
+  <translation key="search_hint">Caută aplicații sau pachete...</translation>
+  <translation key="state_label">Stare</translation>
+  <translation key="system_label">Sistem</translation>
+  <translation key="check_label">Bifă</translation>
+  <translation key="device_ip">IP dispozitiv</translation>
+  <translation key="ip_hint">ex. 192.168.1.100</translation>
+  <translation key="port">Port</translation>
+  <translation key="port_hint">ex. 5555</translation>
+  <translation key="tcp_ip">TCP/IP</translation>
+  <translation key="swipe_down">Glisează în jos</translation>
+
+  <!-- Configuration Options -->
+  <translation key="options">Opțiuni</translation>
+  <translation key="actions">Acțiuni</translation>
+  <translation key="never_uninstall">Nu dezinstala, doar dezactivează</translation>
+  <translation key="export_all_apps">Exportă lista tuturor aplicațiilor</translation>
+  <translation key="refresh_icons">Actualizează toate pictogramele</translation>
+  <translation key="language">Limbă</translation>
+
+  <!-- Device Selector -->
+  <translation key="select_device">Selectează dispozitiv</translation>
+  <translation key="connection">Conexiune</translation>
+  <translation key="serial">Serial</translation>
+
+  <!-- File Picker Dialogs -->
+  <translation key="select_directory">Selectează director</translation>
+  <translation key="export_actions_json">Exportă acțiuni ca JSON</translation>
+  <translation key="import_actions_json">Importă acțiuni JSON</translation>
+  <translation key="export_app_icon">Exportă pictogramă aplicație</translation>
+</translations>
