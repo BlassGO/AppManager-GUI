@@ -62,7 +62,7 @@
   <translation key="connect_error_network">No se pudo conectar a</translation>
   <translation key="connect_error_network_check">Asegúrate de que el dispositivo está en la misma red</translation>
   <translation key="disconnect_error">No se pudo desconectar. Consulta el registro.</translation>
-  <translation key="device_offline_message">El dispositivo está desconectado.&10;&10;Enciende la pantalla y desbloquéalo.</translation>
+  <translation key="device_offline_message">El dispositivo está desconectado.&#10;&#10;Enciende la pantalla y desbloquéalo.</translation>
   <translation key="failed_open_url">No se pudo abrir la URL en el navegador.</translation>
   <translation key="adb_not_installed">ADB no está instalado</translation>
   <translation key="adb_path_instruction">Si ADB está instalado, asegúrate de que esté en el PATH del sistema o selecciona la carpeta con el ejecutable.</translation>
@@ -74,17 +74,17 @@
   <translation key="error_importing_repo">Error al importar repositorio:</translation>
   <translation key="no_devices_found">No se encontraron dispositivos. Conecta uno.</translation>
   <translation key="device_unauthorized">Dispositivo no autorizado. Habilita la depuración USB.</translation>
-  <translation key="failed_transfer_app_manager">Fallo al transferir app_manager al dispositivo.&10;&10;Consulta el registro.</translation>
+  <translation key="failed_transfer_app_manager">Fallo al transferir app_manager al dispositivo.&#10;&#10;Consulta el registro.</translation>
   <translation key="error_preparing_app_manager">Error al preparar app_manager:</translation>
-  <translation key="failed_extract_icons">Fallo al extraer íconos.&10;&10;Consulta el registro.</translation>
-  <translation key="failed_pull_icons">Fallo al obtener icons.zip.&10;&10;Consulta el registro.</translation>
-  <translation key="failed_extract_zip_icons">Fallo al extraer íconos de zip.&10;&10;Consulta el registro.</translation>
-  <translation key="failed_load_app_list">Fallo al cargar lista de aplicaciones.&10;&10;Consulta el registro.</translation>
+  <translation key="failed_extract_icons">Fallo al extraer íconos.&#10;&#10;Consulta el registro.</translation>
+  <translation key="failed_pull_icons">Fallo al obtener icons.zip.&#10;&#10;Consulta el registro.</translation>
+  <translation key="failed_extract_zip_icons">Fallo al extraer íconos de zip.&#10;&#10;Consulta el registro.</translation>
+  <translation key="failed_load_app_list">Fallo al cargar lista de aplicaciones.&#10;&#10;Consulta el registro.</translation>
   <translation key="no_valid_adb_executable">No se encontró un ejecutable ADB válido en la carpeta.</translation>
   <translation key="no_actions_to_export">No hay acciones para exportar.</translation>
   <translation key="invalid_json">JSON inválido.</translation>
   <translation key="icon_file_not_found">Archivo de ícono no encontrado.</translation>
-  <translation key="could_not_open_url">No se pudo abrir la URL.&10;&10;Usa este enlace:</translation>
+  <translation key="could_not_open_url">No se pudo abrir la URL.&#10;&#10;Usa este enlace:</translation>
 
   <!-- Messages -->
   <translation key="device_selected">Dispositivo seleccionado:</translation>

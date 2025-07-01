@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:archive/archive.dart';
+//import 'package:archive/archive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:app_manager/services/adb.dart';
@@ -156,7 +156,8 @@ class ManagerService {
     final rmFlag = ConfigUtils.refreshIcons ? '-rm' : '';
     LoadingOverlay.show(context, Localization.translate('extracting_icons'));
     await AdbService.runShell(
-      'export CLASSPATH=/data/local/tmp/app_manager; app_process / Main $rmFlag -icon /data/local/tmp/icons -zip /data/local/tmp/icons.zip',
+      //'export CLASSPATH=/data/local/tmp/app_manager; app_process / Main $rmFlag -icon /data/local/tmp/icons -zip /data/local/tmp/icons.zip',
+      'export CLASSPATH=/data/local/tmp/app_manager; app_process / Main $rmFlag -icon /data/local/tmp/icons',
       toLowerCase: false,
       toLogIfError: true
     );
@@ -168,6 +169,14 @@ class ManagerService {
     }
 
     LoadingOverlay.show(context, Localization.translate('pulling_icons'));
+    await AdbService.pullFile('/data/local/tmp/icons/.', iconsDirPath);
+    LoadingOverlay.hide();
+
+    if (AdbService.hasError()) {
+      Alert.showWarning(context, Localization.translate('failed_pull_icons'));
+      return false;
+    }
+    /*
     final tempDir = Directory.systemTemp;
     final zipFile = File('${tempDir.path}/icons.zip'.replaceAll('\\', '/'));
     await AdbService.pullFile('/data/local/tmp/icons.zip', zipFile.path);
@@ -189,11 +198,13 @@ class ManagerService {
       }
     }
     zipFile.deleteSync();
+    
 
     if (AdbService.hasError()) {
       Alert.showWarning(context, Localization.translate('failed_extract_zip_icons'));
       return false;
     }
+    */
 
     iconsLoaded = true;
     await assignIconPaths(iconsDirPath, defaultIconPath);
