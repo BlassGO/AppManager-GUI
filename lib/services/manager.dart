@@ -109,10 +109,10 @@ class ManagerService {
     final isUninstallable = !ConfigUtils.neverUninstallApps;
     apps.forEach((pkg, app) {
       final checked = app['isChecked'];
-      final doBefore = app['doBefore'];
+      final action = app['action'];
       final path = app['path'];
       int state = app['state'];
-      if (doBefore == 'install-disable') {
+      if (action == 'install-disable') {
           if (pmSupportsInstallExisting == true) {
             actions.add('pm install-existing $userFlag$pkg && echo -- Installed $pkg');
           } else {
@@ -277,8 +277,8 @@ class ManagerService {
     apps.forEach((pkg, app) {
       final state = app['state'];
       final checked = app['isChecked'];
-      final doBefore = app['doBefore'];
-      if (doBefore == 'install-disable') {
+      final action = app['action'];
+      if (action == 'install-disable') {
         deactivate++;
       } else if (state > 0 && !checked) {
         if (isUninstallable) {
@@ -333,11 +333,11 @@ class ManagerService {
     apps.forEach((pkg, app) {
       final state = app['state'];
       final checked = app['isChecked'];
-      final doBefore = app['doBefore'];
-      if (doBefore == 'install-disable') {
+      final action = app['action'];
+      if (action == 'install-disable') {
         app['state'] = 0;
         app['isChecked'] = false;
-        app['doBefore'] = null;
+        app['action'] = null;
       } else if (state > 0 && !checked) {
         app['state'] = isUninstallable ? -1 : 0;
         app['isChecked'] = false;
