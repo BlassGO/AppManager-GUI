@@ -44,8 +44,6 @@ class HintMessageState extends State<HintMessage> {
     if (_hasBeenDismissed || !mounted) return;
 
     final RenderBox renderBox = _widgetKey.currentContext?.findRenderObject() as RenderBox;
-    if (renderBox == null) return;
-
     final size = renderBox.size;
     final offset = renderBox.localToGlobal(Offset.zero);
     final screenSize = MediaQuery.of(context).size;

@@ -153,7 +153,6 @@ class _TippableCheckbox extends StatelessWidget {
   final GlobalKey<HintMessageState>? hintKey;
 
   const _TippableCheckbox({
-    super.key,
     required this.app,
     this.onChanged,
     required this.index,
@@ -391,22 +390,17 @@ class _AppManagerPageState extends State<AppManagerPage> {
         final matchesSystem = _systemFilter == 'all' || (item['isSystem'] == (_systemFilter == '1'));
         final state = item['state'] as int?;
         final isChecked = item['isChecked'] as bool?;
-        final doBefore = item['doBefore'] as String?;
+        final action = item['action'] as String?;
         final matchesCheck = _checkFilter == 'all' ? true :
             _checkFilter == '1' ? (item['isChecked'] == true) :
             _checkFilter == '0' ? (item['isChecked'] == false) :
             (state != null && isChecked != null) &&
-                (doBefore == 'install-disable' ||
+                (action == 'install-disable' ||
                     (state > 0 && isChecked == false) ||
                     (state == 0 && isChecked == true) ||
                     (state < 0 && isChecked == true));
         return matchesSearch && matchesState && matchesSystem && matchesCheck;
       }).toList();
-
-  void _togglePanel() => setState(() {
-        _isPanelVisible = !_isPanelVisible;
-        _panelWidth = _isPanelVisible ? 300 : 0;
-      });
 
   void _copyToClipboard(String value) {
     Clipboard.setData(ClipboardData(text: value));
