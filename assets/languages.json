@@ -6,5 +6,6 @@
   {"name": "中文 (简体)", "file_name": "zh.xml"},
   {"name": "Bahasa Indonesia", "file_name": "id.xml"},
   {"name": "Русский", "file_name": "ru.xml"},
-  {"name": "Română", "file_name": "ro.xml"}
+  {"name": "Română", "file_name": "ro.xml"},
+  {"name": "Türkçe", "file_name": "tr.xml"}
 ]
