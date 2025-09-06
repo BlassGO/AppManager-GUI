@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<translations>
+  <!-- Setup -->
+  <translation key="welcome">Hoş geldiniz!</translation>
+  <translation key="welcome_message">İstenmeyen uygulamaları zahmetsizce kaldırın ve özel temizleme listelerinizi paylaşın</translation>
+  <translation key="search_languages_hint">Dilinizi bulun...</translation>
+  <translation key="no_languages_found">Eşleşme bulunamadı</translation>
+  <translation key="error_loading_languages">Diller yüklenemedi</translation>
+  <translation key="continue_button">Devam Et</translation>
+
+  <!-- UI Button Labels -->
+  <translation key="check_all">Tümünü işaretle</translation>
+  <translation key="uncheck_all">Tüm işaretleri kaldır</translation>
+  <translation key="restore_all">Tümünü geri yükle</translation>
+  <translation key="apply_button" maxLength="10">UYGULA</translation>
+  <translation key="skip">ATLA</translation>
+  <translation key="support">Destek</translation>
+  <translation key="reload" maxLength="10">Yenile</translation>
+  <translation key="device" maxLength="10">Cihaz</translation>
+  <translation key="log" maxLength="10">Kayıt</translation>
+  <translation key="browse" maxLength="10">Gözat</translation>
+  <translation key="settings" maxLength="10">Ayarlar</translation>
+  <translation key="import" maxLength="10">İçe Aktar</translation>
+  <translation key="export" maxLength="10">Dışa Aktar</translation>
+  <translation key="connect">Bağlan</translation>
+  <translation key="disconnect">Bağlantıyı Kes</translation>
+  <translation key="select_adb">ADB Seç</translation>
+  <translation key="close">Kapat</translation>
+  <translation key="ok">Tamam</translation>
+  <translation key="select">Seç</translation>
+  <translation key="cancel">İptal</translation>
+  <translation key="copy">Kopyala</translation>
+  <translation key="select_adb_folder">ADB klasörünü seç</translation>
+
+  <!-- Tooltips and Hints -->
+  <translation key="apply_button_tip" maxLength="80">Değişiklikleri cihaza uygula</translation>
+  <translation key="checkbox_tip" maxLength="80">Kaldırmak için işareti kaldırın, yeniden etkinleştirmek veya yüklemek için tekrar işaretleyin</translation>
+  <translation key="support_tooltip">Geliştiriciyi destekleyin ☕</translation>
+  <translation key="view_source">Kaynak kodunu görüntüle</translation>
+  <translation key="reload_tooltip">Uygulama listesini yeniden yükle</translation>
+  <translation key="device_tooltip">Bir cihaz seç</translation>
+  <translation key="log_tooltip">Son işlem kaydını görüntüle</translation>
+  <translation key="browse_tooltip">Topluluk verilerini içe aktar</translation>
+  <translation key="settings_tooltip">Ayarlar</translation>
+  <translation key="icon_view_tooltip">Simge görünümünü aç/kapat</translation>
+  <translation key="import_tooltip">İşlemleri içe aktar</translation>
+  <translation key="export_tooltip">Mevcut işlemleri dışa aktar</translation>
+  <translation key="select_adb_tooltip">ADB çalıştırılabilir dosyasının bulunduğu yolu seçin</translation>
+  <translation key="never_uninstall_tooltip">Uygulamaları yalnızca devre dışı bırak ve verilerini temizle</translation>
+  <translation key="export_all_apps_tooltip">Değişiklik olmasa bile tüm uygulamaları dışa aktar</translation>
+  <translation key="refresh_icons_tooltip">Tüm uygulama simgelerini yenilemek için simge önbelleğini her zaman temizle</translation>
+  <translation key="open_in_browser">Tarayıcıda Aç</translation>
+  <translation key="search_repos_hint">Depolarda ara...</translation>
+  <translation key="search_repos_tooltip">Depolarda arama yap</translation>
+  <translation key="reload_repos_tooltip">Depoları yeniden yükle</translation>
+  <translation key="open_github_tooltip">GitHub'ı Aç</translation>
+  <translation key="import_repo_apps_tooltip">Depo uygulamalarını içe aktar</translation>
+
+  <!-- Error and Warning Messages -->
+  <translation key="copied_to_clipboard">Panoya kopyalandı!</translation>
+  <translation key="connect_error_empty">Lütfen hem IP hem de port girin.</translation>
+  <translation key="connect_error_network">Şuraya bağlanılamadı:</translation>
+  <translation key="connect_error_network_check">Cihazın aynı ağda olduğundan emin olun</translation>
+  <translation key="disconnect_error">Bağlantı kesilemedi. Ayrıntılar için kayıtlara bakın.</translation>
+  <translation key="device_offline_message">Cihaz çevrimdışı.&#10;&#10;Lütfen cihaz ekranını açıp kilidini kaldırın.</translation>
+  <translation key="failed_open_url">URL tarayıcıda açılamadı.</translation>
+  <translation key="adb_not_installed">ADB yüklü değil</translation>
+  <translation key="adb_path_instruction">ADB zaten yüklüyse, sistem PATH değişkenine eklendiğinden emin olun veya ADB çalıştırılabilir dosyasını içeren klasörü seçin.</translation>
+  <translation key="adb_install_instruction">Yüklü değil mi? Şu şekilde edinebilirsiniz:</translation>
+  <translation key="log_copied">Kayıt kopyalandı!</translation>
+  <translation key="execution_log">İşlem Kaydı</translation>
+  <translation key="error_fetching_repos">Depolar alınırken hata oluştu:</translation>
+  <translation key="error_searching_repos">Depolar aranırken hata oluştu:</translation>
+  <translation key="error_importing_repo">Depo içe aktarılırken hata oluştu:</translation>
+  <translation key="no_devices_found">Cihaz bulunamadı. Lütfen bir cihaz bağlayın.</translation>
+  <translation key="device_unauthorized">Cihaz yetkilendirilmemiş. Lütfen cihazda USB hata ayıklamasına izin verin.</translation>
+  <translation key="failed_transfer_app_manager">app_manager cihaza aktarılamadı.&#10;&#10;Ayrıntılar için kayıtlara bakın.</translation>
+  <translation key="error_preparing_app_manager">app_manager hazırlanırken hata oluştu:</translation>
+  <translation key="failed_extract_icons">Simgeler çıkarılamadı.&#10;&#10;Ayrıntılar için kayıtlara bakın.</translation>
+  <translation key="failed_pull_icons">icons.zip alınamadı.&#10;&#10;Ayrıntılar için kayıtlara bakın.</translation>
+  <translation key="failed_extract_zip_icons">Simgeler zip dosyasından çıkarılamadı.&#10;&#10;Ayrıntılar için kayıtlara bakın.</translation>
+  <translation key="failed_load_app_list">Uygulama listesi yüklenemedi.&#10;&#10;Ayrıntılar için kayıtlara bakın.</translation>
+  <translation key="no_valid_adb_executable">Seçilen klasörde geçerli bir ADB çalıştırılabilir dosyası bulunamadı.</translation>
+  <translation key="no_actions_to_export">Dışa aktarılacak işlem yok.</translation>
+  <translation key="invalid_json">Geçersiz JSON.</translation>
+  <translation key="icon_file_not_found">Simge dosyası bulunamadı.</translation>
+  <translation key="could_not_open_url">URL açılamadı.&#10;&#10;Şu bağlantıyı kullanın:</translation>
+
+  <!-- Messages -->
+  <translation key="device_selected">Cihaz seçildi:</translation>
+  <translation key="finding_devices">Cihazlar bulunuyor...</translation>
+  <translation key="no_apps_loaded">Yüklü uygulama yok.</translation>
+  <translation key="no_changes_to_apply">Uygulanacak değişiklik yok.</translation>
+  <translation key="commands_executed_successfully">Komutlar başarıyla yürütüldü!</translation>
+  <translation key="extracting_icons">Simgeler çıkarılıyor...</translation>
+  <translation key="pulling_icons">Simgeler alınıyor...</translation>
+  <translation key="applying_changes">Değişiklikler uygulanıyor...</translation>
+  <translation key="adb_path_set">ADB yolu şuraya ayarlandı:</translation>
+  <translation key="exported_to">Şuraya dışa aktarıldı:</translation>
+  <translation key="applied_actions">Uygulandı</translation>
+  <translation key="actions_suffix">işlem.</translation>
+  <translation key="icon_exported_to">Simge şuraya dışa aktarıldı:</translation>
+
+  <!-- Filter and Status Labels -->
+  <translation key="no_matches">Eşleşme yok</translation>
+  <translation key="icon_view">Simge Görünümü</translation>
+  <translation key="activate" maxLength="15">Etkinleştir</translation>
+  <translation key="install" maxLength="15">Yükle</translation>
+  <translation key="uninstall" maxLength="15">Kaldır</translation>
+  <translation key="deactivate" maxLength="15">Devre Dışı Bırak</translation>
+  <translation key="total" maxLength="15">Toplam</translation>
+  <translation key="action" maxLength="15">İşlem</translation>
+  <translation key="count" maxLength="15">Sayı</translation>
+  <translation key="all_apps">Tüm Uygulamalar</translation>
+  <translation key="enabled">Etkin</translation>
+  <translation key="disabled">Devre Dışı</translation>
+  <translation key="uninstalled">Kaldırılmış</translation>
+  <translation key="system_user">Sistem ve Kullanıcı</translation>
+  <translation key="system">Sistem</translation>
+  <translation key="user">Kullanıcı</translation>
+  <translation key="any">Tümü</translation>
+  <translation key="checked">İşaretli</translation>
+  <translation key="unchecked">İşaretsiz</translation>
+  <translation key="applicable">Uygulanabilir</translation>
+
+  <!-- App Information Labels -->
+  <translation key="name" maxLength="15">Ad</translation>
+  <translation key="id" maxLength="15">ID</translation>
+  <translation key="package" maxLength="15">Paket</translation>
+  <translation key="type" maxLength="15">Tür</translation>
+  <translation key="path" maxLength="15">Yol</translation>
+  <translation key="hide">Gizle</translation>
+  <translation key="info">Bilgi</translation>
+  <translation key="export_icon">Simgeyi dışa aktar</translation>
+  <translation key="unknown_repo_name">Bilinmeyen Ad</translation>
+  <translation key="unknown_owner">Bilinmiyor</translation>
+  <translation key="no_description">Açıklama yok</translation>
+  <translation key="device_fallback">Cihaz</translation>
+
+  <!-- Input Field Hints -->
+  <translation key="search_hint">Uygulama veya paket ara...</translation>
+  <translation key="state_label">Durum</translation>
+  <translation key="system_label">Sistem</translation>
+  <translation key="check_label">İşaret</translation>
+  <translation key="device_ip">Cihaz IP</translation>
+  <translation key="ip_hint">örn. 192.168.1.100</translation>
+  <translation key="port">Port</translation>
+  <translation key="port_hint">örn. 5555</translation>
+  <translation key="tcp_ip">TCP/IP</translation>
+  <translation key="swipe_down">Aşağı kaydırın</translation>
+
+  <!-- Configuration Options -->
+  <translation key="options">Seçenekler</translation>
+  <translation key="actions">İşlemler</translation>
+  <translation key="never_uninstall">Asla kaldırma, yalnızca devre dışı bırak</translation>
+  <translation key="export_all_apps">Tüm uygulama listesini dışa aktar</translation>
+  <translation key="refresh_icons">Tüm simgeleri yenile</translation>
+  <translation key="language">Dil</translation>
+
+  <!-- Device Selector -->
+  <translation key="select_device">Cihaz Seç</translation>
+  <translation key="connection">Bağlantı</translation>
+  <translation key="serial">Seri No</translation>
+
+  <!-- File Picker Dialogs -->
+  <translation key="select_directory">Dizin seç</translation>
+  <translation key="export_actions_json">İşlemleri JSON olarak dışa aktar</translation>
+  <translation key="import_actions_json">İşlem JSON dosyasını içe aktar</translation>
+  <translation key="export_app_icon">Uygulama simgesini dışa aktar</translation>
+</translations>
